@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:35:23 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/16 00:44:55 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/16 16:09:35 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,37 @@ int	find_smallest_index(t_stack *s)
 	}
 	return (smallestindex);
 }
-void	pushsmallest(t_stack *s, int	smallestindex)
+
+void	pushsmallest(t_stack *s, int smallestindex)
 {
 	int	i;
-	int	j;
 	int	smallestindex;
 
 	if (smallestindex > (s->size / 2))
 		i = s->size - smallestindex;
 	else
-	{
 		i = smallestindex;
-		j = (s->size) - i;
-	}
 	while (i-- && smallestindex > (s->size / 2))
 		s->revrotate(&s);
-	while (j-- && smallestindex <= (s->size / 2))
+	while (i-- && smallestindex <= (s->size / 2))
 		s->rotate(&s);
 	s->push_to_other(&s, s->other);
 }
 
-void	sortfive(t_stack *s)
+void	sortfourfive(t_stack *s)
 {
 	int	smallestindex;
+	int	i;
 
-	smallestindex = find_smallest_index(s);
-	pushsmallest(s, smallestindex);
-	smallestindex = find_smallest_index(s);
-	pushsmallest(s, smallestindex);
+	i = s->size;
+	while (s->size > 3)
+	{
+		smallestindex = find_smallest_index(s);
+		pushsmallest(s, smallestindex);
+	}
 	sortthree(s);
-	// find way to push back both
+	while (s->other->size > 0)
+		s->push_to_self;
 }
 
 // void	sortfive(t_stack *s)
@@ -95,7 +96,7 @@ void	sortfive(t_stack *s)
 // 	// find out if the smallest is closer to top or bottom
 // 	// if in middle or upper half, return +ve num of times to rotate it to top
 // 	// if below middle, return
-		-ve num. value should be num of times to rev rotate to top.
+//	// -ve num. value should be num of times to rev rotate to top.
 // 	return (num);
 // }
 
