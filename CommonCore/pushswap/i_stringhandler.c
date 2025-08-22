@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:04:43 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/14 23:59:33 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/22 20:50:49 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int check_string(char *str)
 	{
 		if (
 				(ft_isalum(str[i]) && !ft_isdigit(str[i])) 
-				|| 
-				(str[i+1] 
+				||(str[i+1] 
 				&& (str[i] == '-' || str[i] == '+') 
 				&& (
 					(str[i+1] == '-' || str[i+1] == '+') 
@@ -52,14 +51,14 @@ char *addstring(char *main, char *new)
 
 int checkdupes(int *int_arr, int size)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
-	while(i < size -1)
+	while (i < size -1)
 	{
 		j = i + 1;
-		while(j < size)
+		while (j < size)
 		{
 			if (int_arr[i] == int_arr[j])
 				return (0);
