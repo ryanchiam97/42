@@ -1,6 +1,6 @@
 LIBFTDIR = libft
 LIBFTLIB = libft.a
-NAME = pushswap.a
+NAME = pushswap
 
 SOURCES = 	pushswap.c\
 			i_parsehandler.c\
@@ -16,7 +16,7 @@ SOURCES = 	pushswap.c\
 
 OBJECTS = $(SOURCES:.c=.o)
 
-CC = cc
+CC = gcc
 CFLAGS = -g -Wall -Wextra -Werror
 
 all : $(NAME)
@@ -28,12 +28,11 @@ $(LIBFTLIB) :
 	make -C $(LIBFTDIR) bonus
 
 $(NAME): $(OBJECTS) $(LIBFTLIB)
-	cp $(LIBFTDIR)/$(LIBFTLIB) $(NAME)
-	ar rcs $(NAME) $(OBJECTS)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFTDIR)/$(LIBFTLIB) -o $(NAME)
 
 clean:
-	make -C $(LIBFTDIR) fclean
-	rm -f $(NAME)
+	make -C $(LIBFTDIR) clean
+	rm -f $(OBJECTS)
 
 fclean: clean
 	make -C $(LIBFTDIR) fclean

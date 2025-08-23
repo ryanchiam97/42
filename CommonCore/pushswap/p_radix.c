@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:54 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 18:45:48 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 21:02:09 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	determinerotation(t_stack *s, int bit, int power)
 			rr++;
 	}
 	rr = s->size - rr;
+	r = 0;
 	while (r < s->size)
 	{
 		if (bit ^ (s->arr[s->size - r] >> power))
@@ -40,7 +41,7 @@ int	determinerotation(t_stack *s, int bit, int power)
 		return (r);
 }
 
-int	calc_cheapest_order(t_stack *s, int power, int *pushwho)
+int	cheapest_order(t_stack *s, int power, int *pushwho)
 {
 	int	ops0;
 	int	ops1;
@@ -49,8 +50,8 @@ int	calc_cheapest_order(t_stack *s, int power, int *pushwho)
 
 	r0 = determinerotation(s, 0, power);
 	r1 = determinerotation(s, 1, power);
-	ops0 += (2 * abs(r0));
-	ops1 += (3 * abs(r1));
+	ops0 = (2 * abs(r0));
+	ops1 = (3 * abs(r1));
 	if (ops1 < ops0)
 	{
 		*pushwho = 1;
@@ -89,7 +90,7 @@ void	pushback(t_stack *s, int pushbit)
 	}
 }
 
-int	radixsort(t_stack *s, int totalbinarydigits)
+void	radixsort(t_stack *s, int totalbinarydigits)
 {
 	int	p;
 	int	rotation;
@@ -98,7 +99,7 @@ int	radixsort(t_stack *s, int totalbinarydigits)
 	p = 0;
 	while (p < totalbinarydigits)
 	{
-		rotation = calc_cheapest_order(s, p, &pushbit);
+		rotation = cheapest_order(s, p, &pushbit);
 		pushover(s, pushbit, rotation, p);
 		pushback(s, pushbit);
 		p++;

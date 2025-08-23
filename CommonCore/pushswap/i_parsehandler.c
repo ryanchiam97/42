@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:04:43 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 18:22:02 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 23:06:42 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,22 @@
 char	*safeaddstring(char *main, char *new)
 {
 	char	*temp;
+	char	*temp2;
 
 	if (!main || !new)
 		return (NULL);
-	temp = main;
-	main = ft_strjoin(temp, " ");
+	temp = ft_strjoin(main, " ");
+	if (!temp)
+	{
+		free(main);
+		return (NULL);
+	}
+	temp2 = ft_strjoin(temp, new);
+	free(main);
 	free(temp);
-	temp = main;
-	main = ft_strjoin(temp, new);
-	free(temp);
-	return (main);
+	if (!temp2)
+		return (NULL);
+	return (temp2);
 }
 
 int	check_string(char *str)
@@ -35,7 +41,7 @@ int	check_string(char *str)
 	while (str[i])
 	{
 		if (
-			(ft_isalum(str[i]) && !ft_isdigit(str[i]))
+			(ft_isalnum(str[i]) && !ft_isdigit(str[i]))
 			|| (str[i + 1] && (str[i] == '-' || str[i] == '+')
 				&& ((str[i + 1] == '-' || str[i + 1] == '+')
 					|| !ft_isdigit(str[i + 1])
@@ -48,31 +54,49 @@ int	check_string(char *str)
 	return (1);
 }
 
-int	parsehandler(int argcount, char ***args, int *return_array)
+int	parse_int_arr(char **str, int *sizeadr, int ***r_arr)
+{
+	int	*int_arr;
+
+	if (check_string(*str))
+		int_arr = parseinput(*str, sizeadr);
+	else
+		return (0);
+	index_arr(&int_arr, *sizeadr);
+	if (checkdupes(int_arr, *sizeadr))
+	{
+		**r_arr = int_arr;
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int	parse(int argcount, char ***args, int **return_array)
 {
 	int		i;
 	char	*str;
 	int		size;
-	int		*int_arr;
 
-	argcount--;
-	i = 1;
-	str = "";
+	str = ft_strdup((*args)[1]);
+	if (!str)
+		return (-1);
 	size = -1;
-	while (i < argcount - 1)
-		str = safeaddstring(str, &args[i++]);
-	if (check_string(str) && size != -1)
-		int_arr = parseinput(str, &size);
-	else
-		return (NULL);
-	index(&int_arr, size);
-	if (checkdupes(int_arr, size))
+	i = 2;
+	while (i < argcount)
 	{
-		return_array = int_arr;
-		return (size);
+		str = safeaddstring(str, (*args)[i]);
+		if (!str)
+		{
+			free(str);
+			return (-1);
+		}
+		i++;
 	}
+	if (parse_int_arr(&str, &size, &return_array))
+		return (size);
 	else
-		return (NULL);
+		return (-1);
 }
 
 

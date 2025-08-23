@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 15:56:52 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 18:30:01 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 23:40:28 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,24 @@
 
 t_stack	*initstack(int *arr, char name, int size, int maxsize)
 {
-	t_stack	stack;
 	t_stack	*s;
 
-	s = &stack;
+	s = malloc(sizeof(t_stack));
+	if (!s)
+		return (NULL);
 	s->arr = malloc(sizeof(int) * maxsize);
+	if (!s->arr)
+		return (NULL);
+	if (s->arr)
+		ft_memcpy(s->arr, arr, sizeof(int) * size);
 	s->size = size;
 	s->name = name;
+	assign_ops(s);
+	return (s);
+}
+
+void	assign_ops(t_stack *s)
+{
 	if (s->name == 'a')
 	{
 		s->swap = sa;
@@ -37,7 +48,6 @@ t_stack	*initstack(int *arr, char name, int size, int maxsize)
 		s->push_to_other = pa;
 		s->push_to_self = pb;
 	}
-	return (s);
 }
 
 void	loadotherstack(t_stack *s, t_stack *other)
@@ -59,6 +69,7 @@ t_stack	*stack_startup(int *arr, int max_size)
 	t_stack	*b;
 	int		*intarr;
 
+	intarr = NULL;
 	a = initstack(arr, 'a', max_size, max_size);
 	b = initstack(intarr, 'b', 0, max_size);
 	loadotherstack(a, b);

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 22:35:23 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 17:26:51 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 21:53:10 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	find_smallest_index(t_stack *s)
 void	pushsmallest(t_stack *s, int smallestindex)
 {
 	int	i;
-	int	smallestindex;
 
 	if (smallestindex > (s->size / 2))
 		i = s->size - smallestindex;
@@ -48,9 +47,7 @@ void	pushsmallest(t_stack *s, int smallestindex)
 void	sortfourfive(t_stack *s)
 {
 	int	smallestindex;
-	int	i;
 
-	i = s->size;
 	while (s->size > 3)
 	{
 		smallestindex = find_smallest_index(s);

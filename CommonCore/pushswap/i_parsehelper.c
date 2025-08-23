@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:45 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 17:53:27 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 23:41:25 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	checkdupes(int *int_arr, int size)
 	return (1);
 }
 
-void	index(int **int_arr, int size)
+void	index_arr(int **int_arr, int size)
 {
 	int	*temp;
 	int	i;
@@ -45,7 +45,7 @@ void	index(int **int_arr, int size)
 	i = 0;
 	while (i < size)
 	{
-		rank = 0;
+		rank = 1;
 		j = 0;
 		while (j < size)
 		{
