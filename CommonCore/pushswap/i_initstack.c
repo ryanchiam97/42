@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 15:56:52 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/16 16:12:05 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 18:30:01 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,28 @@ t_stack	*initstack(int *arr, char name, int size, int maxsize)
 	return (s);
 }
 
-void	loadstack(t_stack *s, t_stack *other)
+void	loadotherstack(t_stack *s, t_stack *other)
 {
 	s->other = other;
 }
 
-void	freestack(t_stack *s)
+void	freeallstacks(t_stack *s)
 {
+	free(s->other->arr);
+	free(s->other);
 	free(s->arr);
+	free(s);
+}
+
+t_stack	*stack_startup(int *arr, int max_size)
+{
+	t_stack	*a;
+	t_stack	*b;
+	int		*intarr;
+
+	a = initstack(arr, 'a', max_size, max_size);
+	b = initstack(intarr, 'b', 0, max_size);
+	loadotherstack(a, b);
+	loadotherstack(b, a);
+	return (a);
 }

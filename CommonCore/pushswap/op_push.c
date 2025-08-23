@@ -6,11 +6,12 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:29:45 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/16 00:05:21 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 17:04:13 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
 int	push(t_stack *src, t_stack *dst)
 {
 	int	pushnum;
@@ -25,12 +26,14 @@ int	push(t_stack *src, t_stack *dst)
 	dst->size++;
 	return (1);
 }
-void pa(t_stack *a, t_stack *b)
+
+void	pa(t_stack *a, t_stack *b)
 {
 	if (push(a, b))
 		ft_putstr_fd("pa\n", 1);
 }
-void pb(t_stack *b, t_stack *a)
+
+void	pb(t_stack *b, t_stack *a)
 {
 	if (push(b, a))
 		ft_putstr_fd("pb\n", 1);

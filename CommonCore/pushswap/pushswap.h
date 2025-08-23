@@ -6,12 +6,12 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 20:44:06 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/16 15:50:25 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 18:33:58 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PUSH_SWAP
-# define PUSH_SWAP
+#ifndef PUSHSWAP_H
+# define PUSHSWAP_H
 
 # include "libft/libft.h"
 # include <limits.h>
@@ -35,13 +35,19 @@ typedef struct s_stack
 }					t_stack;
 
 int					get_char_arr_size(char **arr);
-int					*parseinput(char *input);
+int					*parseinput(char *input, int *returnsize);
 void				index(int **int_arr, int size);
 int					determinepower(int max);
 
 int					check_string(char *str);
-char				*addstring(char *main, char *new);
+char				*safeaddstring(char *main, char *new);
 int					checkdupes(int *int_arr, int size);
+int					parsehandler(int argcount, char ***args, int *return_array);
+
+t_stack				*initstack(int *arr, char name, int size, int maxsize);
+void				loadotherstack(t_stack *s, t_stack *other);
+void				freeallstacks(t_stack *s);
+t_stack				*stack_startup(int *arr, int max_size);
 
 int					push(t_stack *src, t_stack *dst);
 void				pa(t_stack *a, t_stack *b);
@@ -62,7 +68,18 @@ void				rra(t_stack *a);
 void				rrb(t_stack *b);
 void				rrr(t_stack *a, t_stack *b);
 
+void				sorttwo(t_stack *s);
 void				sortthree(t_stack *s);
-void				sortthreelogic(t_stack *s, t_op swp, t_op rt, t_op revrt);
+
+int					find_smallest_index(t_stack *s);
+void				pushsmallest(t_stack *s, int smallestindex);
+void				sortfourfive(t_stack *s);
+
+int					radixsort(t_stack *s, int totalbinarydigits);
+void				pushback(t_stack *s, int pushbit);
+void				pushover(t_stack *s, int pushbit, int rot, int power);
+int					calc_cheapest_order(t_stack *s, int power, int *pushwho);
+int					determinerotation(t_stack *s, int bit, int power);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:37:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/16 16:21:00 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 18:26:36 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,23 @@ void	sortthree(t_stack *s)
 	if (s->arr[0] < s->arr[1] && s->arr[1] < s->arr[2])
 		return ;
 	else if (s->arr[1] < s->arr[0] && s->arr[0] < s->arr[2])
-		return (s->swap(&s));
+		return (s->swap(s));
 	else if (s->arr[2] < s->arr[0] && s->arr[0] < s->arr[1])
-		return (s->revrotate(&s));
+		return (s->revrotate(s));
 	else if (s->arr[1] < s->arr[2] && s->arr[2] < s->arr[0])
-		return (s->rotate(&s));
+		return (s->rotate(s));
 	else if (s->arr[2] < s->arr[1] && s->arr[1] < s->arr[0])
-		return (s->rotate(&s), s->swap(&s));
+		return (s->rotate(s), s->swap(s));
 	else if (s->arr[0] < s->arr[2] && s->arr[2] < s->arr[1])
-		return (s->revrotate(&s), s->swap(&s));
+		return (s->revrotate(s), s->swap(s));
+}
+
+void	sorttwo(t_stack *s)
+{
+	if (s->arr[0] > s->arr[1])
+		return (s->swap(s));
+	else
+		return ;
 }
 
 // void	sortthree(t_stack *s)

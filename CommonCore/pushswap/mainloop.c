@@ -6,52 +6,41 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:54 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/22 23:56:46 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 17:25:35 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int	bitcheck(int bitinput, int tocheck, int power)
-{
-	if (bitinput == 1)
-	{
-		if ((tocheck & (0x01 << power)) == 1)
-			return (1);
-	}
-	else
-	{
-		if ((tocheck ^ (0x01 << power)) == 1)
-			return (1);
-	}
-	return (0);
-}
-
 int	determinerotation(t_stack *s, int bit, int power)
 {
-	int				rot;
-	int				revrot;
+	int				rr;
+	int				r;
 
-	rot = 0;
-	while (rot < s->size)
+	rr = 0;
+	while (rr < s->size)
 	{
-		if (bitcheck(bit, s->arr[rot], power))
-			break ;			// while (s->other->size!=0)
-			// s->pushtoself
-
-	{
-		if (bitcheck(bit, s->arr[s->size - revrot], power))
+		if (bit ^ (s->arr[rr] >> power))
 			break ;
 		else
-			revrot++;
+			rr++;
 	}
-	if (rot > revrot)
-		return (rot);
+	rr = s->size - rr;
+	while (r < s->size)
+	{
+		if (bit ^ (s->arr[s->size - r] >> power))
+			break ;
+		else
+			r++;
+	}
+	r = s->size - r;
+	if (rr > r)
+		return (rr * -1);
 	else
-		return (revrot * -1);
+		return (r);
 }
 
-int	*determinecheapestmacro(t_stack *s, int power, int *pushwho)
+int	calc_cheapest_order(t_stack *s, int power, int *pushwho)
 {
 	int	ops0;
 	int	ops1;
@@ -74,6 +63,32 @@ int	*determinecheapestmacro(t_stack *s, int power, int *pushwho)
 	}
 }
 
+void	pushover(t_stack *s, int pushbit, int rot, int power)
+{
+	while (rot)
+	{
+		if (pushbit ^ (s->arr[0] >> power))
+			s->rotate(s);
+		else
+			s->push_to_other(s, s->other);
+		if (rot > 0)
+			rot--;
+		else
+			rot++;
+	}
+	return ;
+}
+
+void	pushback(t_stack *s, int pushbit)
+{
+	while (s->other->size > 0)
+	{
+		s->push_to_self(s->other, s);
+		if (pushbit == 1)
+			s->rotate(s);
+	}
+}
+
 int	radixsort(t_stack *s, int totalbinarydigits)
 {
 	int	p;
@@ -83,34 +98,9 @@ int	radixsort(t_stack *s, int totalbinarydigits)
 	p = 0;
 	while (p < totalbinarydigits)
 	{
-		rotation = determinecheapestmacro(s, p, &pushbit);
-		// pushover
-		if (rotation > 0)
-		{
-			// while rotation > 0
-				// if pushbit ^ (s->arr[0] >> p)
-					// do rotate
-				//else
-					// do push over 
-					// rotation--
-		}
-		else
-		{
-			//while rotation < 0
-				// if pushbit ^ ( s->arr[0] >> p)
-					// do revrotate
-				//else
-					// do push over
-					// rotation++
-		}
-		//pushback
-		// while (s->other->size!=0)
-			//if pushbit == 0
-				// s->pushtoself
-			//else
-				//s->pushtoself
-				//s->rotate
+		rotation = calc_cheapest_order(s, p, &pushbit);
+		pushover(s, pushbit, rotation, p);
+		pushback(s, pushbit);
 		p++;
-	}		
+	}
 }
-

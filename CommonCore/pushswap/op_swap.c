@@ -6,11 +6,12 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:30:11 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/14 22:15:19 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 17:06:10 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
 int	swap(t_stack *s)
 {
 	int	tmp;
@@ -22,20 +23,24 @@ int	swap(t_stack *s)
 	s->arr[1] = tmp;
 	return (1);
 }
-void sa(t_stack *a)
+
+void	sa(t_stack *a)
 {
 	if (swap(a))
 		ft_putstr_fd("sa\n", 1);
 }
-void sb(t_stack *b)
+
+void	sb(t_stack *b)
 {
 	if (swap(b))
 		ft_putstr_fd("sb\n", 1);
 }
-void ss(t_stack *a, t_stack *b)
+
+void	ss(t_stack *a, t_stack *b)
 {
 	int	_sa;
 	int	_sb;
+
 	_sa = swap(a);
 	_sb = swap(b);
 	if (_sa && _sb)

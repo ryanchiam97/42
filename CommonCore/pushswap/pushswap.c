@@ -6,14 +6,31 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/11 22:42:53 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/23 18:37:13 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "pushswap.h"
 
 int main(int argc, char** argv)
 {
-	//
+	int		*int_arr;
+	int		size;
+	t_stack	*a;
+
+	size = parsehandler(argc, argv, int_arr);
+	a = stack_startup(int_arr, size);
+	if (size < 2)
+		return (0);
+	else if (size == 2)
+		sorttwo(a);
+	else if (size == 3)
+		sortthree(a);
+	else if (size < 6)
+		sortfourfive(a);
+	else
+		radixsort(a, determinepower(size - 1));
+	freeallstacks(a);
 }
 /*
 To do:
