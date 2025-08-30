@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 22:40:34 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/30 16:39:13 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	{
 		size = parse(argc, &argv, &int_arr);
 		if (size == -1)
-			return (0);
+			return (-1);
 		a = stack_startup(int_arr, size);
 		if (size < 2)
 			return (0);

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:30:11 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 17:06:10 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/30 22:50:27 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,15 @@ int	swap(t_stack *s)
 void	sa(t_stack *a)
 {
 	if (swap(a))
-		ft_putstr_fd("sa\n", 1);
+		write(1, "sa\n", 3);
+	// printout_stack_info(a);
 }
 
 void	sb(t_stack *b)
 {
 	if (swap(b))
-		ft_putstr_fd("sb\n", 1);
+		write(1, "sb\n", 3);
+	// printout_stack_info(b->other);
 }
 
 void	ss(t_stack *a, t_stack *b)
@@ -44,9 +46,10 @@ void	ss(t_stack *a, t_stack *b)
 	_sa = swap(a);
 	_sb = swap(b);
 	if (_sa && _sb)
-		ft_putstr_fd("ss", 1);
+		write(1, "ss\n", 3);
 	else if (_sa == 1 && _sb == 0)
 		sa(a);
 	else if (_sa == 0 && _sb == 1)
 		sb(b);
+	// printout_stack_info(a);
 }

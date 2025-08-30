@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:29:45 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 17:04:13 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/30 22:51:25 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ int	push(t_stack *src, t_stack *dst)
 
 void	pa(t_stack *a, t_stack *b)
 {
-	if (push(a, b))
-		ft_putstr_fd("pa\n", 1);
+	push(b, a);
+	write(1, "pa\n", 3);
+	// printout_stack_info(a);
 }
 
-void	pb(t_stack *b, t_stack *a)
+void	pb(t_stack *a, t_stack *b)
 {
-	if (push(b, a))
-		ft_putstr_fd("pb\n", 1);
+	push(a, b);
+	write(1, "pb\n", 3);
+	// printout_stack_info(a);
 }

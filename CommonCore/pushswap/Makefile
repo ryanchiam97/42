@@ -1,6 +1,6 @@
 LIBFTDIR = libft
 LIBFTLIB = libft.a
-NAME = pushswap
+NAME = push_swap
 
 SOURCES = 	pushswap.c\
 			i_parsehandler.c\

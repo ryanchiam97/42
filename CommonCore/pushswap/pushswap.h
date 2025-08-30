@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 20:44:06 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 23:04:34 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/08/30 22:50:02 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,11 @@ void					pushsmallest(t_stack *s, int smallestindex);
 void					sortfourfive(t_stack *s);
 
 void					radixsort(t_stack *s, int totalbinarydigits);
-void					pushback(t_stack *s, int pushbit);
-void					pushover(t_stack *s, int pushbit, int rot, int power);
-int						cheapest_order(t_stack *s, int power, int *pushwho);
-int						determinerotation(t_stack *s, int bit, int power);
+// void	pushback(t_stack *s, int pushbit);
+// void	pushover(t_stack *s, int pushbit, int rot, int power);
+// int	getrotation(t_stack *s, int p);
+// int						get_rotations(t_stack *s, int power);
+// int						determinerotation(t_stack *s, int bit, int power);
+// void printout_stack_info(t_stack *s);
 
 #endif
