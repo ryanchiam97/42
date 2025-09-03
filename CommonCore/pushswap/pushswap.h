@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 20:44:06 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/30 22:50:02 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/04 03:59:33 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <math.h>
 
 typedef struct s_stack	t_stack;
 
@@ -35,6 +36,11 @@ struct s_stack
 	t_op2				push_to_other;
 	t_op2				push_to_self;
 };
+
+int 					isqrt(int n);
+int						imin(int a, int b);
+int 					imax(int a, int b);
+int 					ilog2(int n);
 
 int						get_char_arr_size(char **arr);
 int						*parseinput(char *input, int *returnsize);
@@ -79,8 +85,12 @@ int						find_smallest_index(t_stack *s);
 void					pushsmallest(t_stack *s, int smallestindex);
 void					sortfourfive(t_stack *s);
 
-void					radixsort(t_stack *s, int totalbinarydigits);
-// void	pushback(t_stack *s, int pushbit);
+void					globalradixsort(t_stack *s, int totalbinarydigits);
+void					pushback(t_stack *s);
+int						determinechunksize(t_stack *s, double alpha, int nmin, int nmax);
+void					chunkdecisionlayer(t_stack *s, int r_per_p_threshold, int CincreFractnOfRemain);
+int						onechunk(t_stack* s, int mincborder, int maxcborder);
+
 // void	pushover(t_stack *s, int pushbit, int rot, int power);
 // int	getrotation(t_stack *s, int p);
 // int						get_rotations(t_stack *s, int power);

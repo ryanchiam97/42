@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:19:28 by rchiam            #+#    #+#             */
-/*   Updated: 2025/05/12 14:02:38 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/04 03:46:08 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ char	*checks(int n)
 		ft_strlcpy(s, "0", 2);
 		return (s);
 	}
-	return (malloc(0));
+	s = malloc(1);
+	if (!s)
+		return (NULL);
+	s[0] = '\0';
+	return (s);
 }
 
 char	*int_to_string(char *s, int sign, int digits, int n)

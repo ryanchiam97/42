@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/30 16:39:13 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/04 04:27:53 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	main(int argc, char **argv)
 		else if (size < 6)
 			sortfourfive(a);
 		else
-			radixsort(a, determinepower(size - 1));
+			chunkdecisionlayer(a, 6, 10);
 		freeallstacks(a);
 	}
 }

@@ -12,7 +12,8 @@ SOURCES = 	pushswap.c\
 			op_push.c\
 			op_swap.c\
 			op_rotate.c\
-			op_revrotate.c
+			op_revrotate.c\
+			p_utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
