@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/06 17:08:56 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/18 00:19:16 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ int	main(int argc, char **argv)
 	int		size;
 	t_stack	*a;
 
-	if (argc > 2)
+	if (argc >= 2)
 	{
 		size = parse(argc, &argv, &int_arr);
 		if (size == -1)
 			return (-1);
 		a = stack_startup(int_arr, size);
 		if (size < 2)
-			return (0);
+			return (freeallstacksandinput(a, a->other, int_arr), 0);
 		else if (size == 2)
 			sorttwo(a);
 		else if (size == 3)
@@ -34,7 +34,7 @@ int	main(int argc, char **argv)
 			sortfourfive(a);
 		else
 			globalradixsort(a, determinepower(a->size - 1));
-		freeallstacks(a,a->other);
+		freeallstacksandinput(a, a->other, int_arr);
 	}
 }
 /*

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:04:43 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/30 22:06:12 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/18 00:22:50 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ char	*safeaddstring(char *main, char *new)
 		return (NULL);
 	temp = ft_strjoin(main, " ");
 	if (!temp)
-	{
-		free(main);
-		return (NULL);
-	}
+		return (free(main), NULL);
 	temp2 = ft_strjoin(temp, new);
 	free(main);
 	free(temp);
@@ -38,6 +35,8 @@ int	check_string(char *str)
 	int	i;
 
 	i = 0;
+	if (ft_strlen(str) == 0 || (ft_strlen(str) == 1 && !ft_isdigit(str[i])))
+		return (0);
 	while (str[i])
 	{
 		if (
@@ -47,6 +46,10 @@ int	check_string(char *str)
 					|| !ft_isdigit(str[i + 1])
 				)
 			)
+			|| ((str[i] == '-' || str[i] == '+')
+				&& (i >= 1)
+				&& str[i - 1]
+				&& ft_isdigit(str[i - 1]))
 		)
 			return (0);
 		i++;
@@ -61,7 +64,7 @@ int	parse_int_arr(char **str, int *sizeadr, int ***r_arr)
 	if (check_string(*str))
 		int_arr = parseinput(*str, sizeadr);
 	else
-		return (0);
+		return (write(2, "Error\n", 6), 0);
 	index_arr(&int_arr, *sizeadr);
 	if (checkdupes(int_arr, *sizeadr))
 	{
@@ -69,7 +72,7 @@ int	parse_int_arr(char **str, int *sizeadr, int ***r_arr)
 		return (1);
 	}
 	else
-		return (0);
+		return (write(2, "Error\n", 6), 0);
 }
 
 int	parse(int argcount, char ***args, int **return_array)
@@ -87,22 +90,18 @@ int	parse(int argcount, char ***args, int **return_array)
 	{
 		str = safeaddstring(str, (*args)[i]);
 		if (!str)
-		{
-			free(str);
 			return (-1);
-		}
 		i++;
 	}
 	if (parse_int_arr(&str, &size, &return_array))
-		return (size);
+		return (free(str), size);
 	else
-		return (-1);
+		return (free(str), -1);
 }
 
-
-/* 
+/*
 Error Checklist
-
+(DONE)
 The program must work with several numerical arguments
 ./push_swap 1 3 5 +9 20 -4 50 60 04 08
 
@@ -113,7 +112,7 @@ The program should NOT work if it encounters another character
 ./push_swap 1 3 dog 35 80 -3
 ./push_swap a
 ./push_swap 1 2 3 5 67b778 947
-.push_swap " 12 4 6 8 54fhd 4354"
+./push_swap " 12 4 6 8 54fhd 4354"
 ./push_swap 1 --    45 32
 these examples should return "Error\n"
 
@@ -133,11 +132,14 @@ The program should work with INT MAX & INT MIN
 ./push_swap "2147483647 843 56544 24394"
 these examples should work and sort your list
 
+Nothing has been specified when strings and int are mixed. It's up to you what you want to do
+./push_swap "1 2 4 3" 76 90 "348 05"
+
+(NOT DONE)
 ./push_swap 54867543867438 3
 ./push_swap -2147483647765 4 5
 ./push_swap "214748364748385 28 47 29"
 these examples should return "Error\n"
 
-Nothing has been specified when strings and int are mixed. It's up to you what you want to do
-./push_swap "1 2 4 3" 76 90 "348 05"
+./push_swap 1 " "  to show error
 */

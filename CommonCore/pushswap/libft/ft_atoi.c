@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 23:05:41 by rchiam            #+#    #+#             */
-/*   Updated: 2025/05/28 22:29:22 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/17 22:58:18 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,3 @@ int	ft_atoi(const char *str)
 	}
 	return (i * sign);
 }
-// may need to handle min and max no. to...
-// #include <stdio.h>
-
-// int	main(void)
-// {
-// 	char	*s;
-
-// 	s = "546:5";
-// 	printf("\n%i", ft_atoi(s));
-// }

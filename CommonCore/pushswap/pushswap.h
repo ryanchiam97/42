@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pushswap.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 20:44:06 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/06 17:12:47 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/18 00:18:06 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int						parse_int_arr(char **str, int *sizeadr, int ***r_arr);
 t_stack					*initstack(int *arr, char name, int size, int maxsize);
 void					assign_ops(t_stack *s);
 void					loadotherstack(t_stack *s, t_stack *other);
-void					freeallstacks(t_stack *a, t_stack *b);
+void					freeallstacksandinput(t_stack *a, t_stack *b, int *intarr);
 t_stack					*stack_startup(int *arr, int max_size);
 
 int						push(t_stack *src, t_stack *dst);

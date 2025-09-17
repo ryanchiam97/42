@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   i_initstack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 15:56:52 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/06 17:11:54 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/18 00:18:32 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ void	loadotherstack(t_stack *s, t_stack *other)
 	s->other = other;
 }
 
-void	freeallstacks(t_stack *a, t_stack *b)
+void	freeallstacksandinput(t_stack *a, t_stack *b, int *intarr)
 {
 	free(a->arr);
 	free(a);
 	free(b->arr);
 	free(b);
+	free(intarr);
 }
 
 t_stack	*stack_startup(int *arr, int max_size)

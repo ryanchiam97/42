@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   p_radix.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:54 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/06 17:07:20 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/17 23:45:47 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,31 +146,8 @@
 // 		while (pushedback--)
 // 			s->rotate(s);
 // 	}
-	
 // 	return (globalradixsort(s, determinepower(s->size - 1)));
 // }
-
-void	globalradixsort(t_stack *s, int totalbinarydigits)
-{
-	int	p;
-	int	i;
-
-	p = 0;
-	while (p < totalbinarydigits)
-	{
-		i = s->size;
-		while (i-- > 0)
-		{
-			if (((s->arr[0] >> p) & 1) == 0)
-				s->push_to_other(s, s->other);
-			else
-				s->rotate(s);
-		}
-		while (s->other->size > 0)
-			s->push_to_self(s, s->other);
-		p++;
-	}
-}
 
 // void printout_stack_info(t_stack *s)
 // {
@@ -194,3 +171,26 @@ void	globalradixsort(t_stack *s, int totalbinarydigits)
 // 	printf("\n");
 // }
 
+void	globalradixsort(t_stack *s, int totalbinarydigits)
+{
+	int	p;
+	int	i;
+
+	p = 0;
+	while (p < totalbinarydigits)
+	{
+		i = s->size;
+		while (i-- > 0)
+		{
+			if (((s->arr[0] >> p) & 1) == 0)
+				s->push_to_other(s, s->other);
+			else
+				s->rotate(s);
+		}
+		while (s->other->size > 0)
+			s->push_to_self(s, s->other);
+		p++;
+	}
+	while (s->arr[0] != 1)
+		s->rotate(s);
+}
