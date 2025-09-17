@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 20:44:06 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/04 03:59:33 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/06 17:12:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,16 @@ struct s_stack
 	t_op				revrotate;
 	t_op2				push_to_other;
 	t_op2				push_to_self;
+	// int					max;
+	// int					min;
+	// int					maxindex;
+	// int					minindex;
 };
 
-int 					isqrt(int n);
-int						imin(int a, int b);
-int 					imax(int a, int b);
-int 					ilog2(int n);
-
+// int 					imin(int a, int b);
+// int 					isqrt(int n);
+// void    				updateminmax(t_stack *s);
+// void    				updateminmaxzero(t_stack *s);
 int						get_char_arr_size(char **arr);
 int						*parseinput(char *input, int *returnsize);
 void					index_arr(int **int_arr, int size);
@@ -56,7 +59,7 @@ int						parse_int_arr(char **str, int *sizeadr, int ***r_arr);
 t_stack					*initstack(int *arr, char name, int size, int maxsize);
 void					assign_ops(t_stack *s);
 void					loadotherstack(t_stack *s, t_stack *other);
-void					freeallstacks(t_stack *s);
+void					freeallstacks(t_stack *a, t_stack *b);
 t_stack					*stack_startup(int *arr, int max_size);
 
 int						push(t_stack *src, t_stack *dst);
@@ -86,10 +89,8 @@ void					pushsmallest(t_stack *s, int smallestindex);
 void					sortfourfive(t_stack *s);
 
 void					globalradixsort(t_stack *s, int totalbinarydigits);
-void					pushback(t_stack *s);
-int						determinechunksize(t_stack *s, double alpha, int nmin, int nmax);
-void					chunkdecisionlayer(t_stack *s, int r_per_p_threshold, int CincreFractnOfRemain);
-int						onechunk(t_stack* s, int mincborder, int maxcborder);
+// int						pushback(t_stack *s);
+// void					chunkdecisionlayer(t_stack *s);
 
 // void	pushover(t_stack *s, int pushbit, int rot, int power);
 // int	getrotation(t_stack *s, int p);

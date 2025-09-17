@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   i_initstack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 15:56:52 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/23 23:40:28 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/06 17:11:54 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void	loadotherstack(t_stack *s, t_stack *other)
 	s->other = other;
 }
 
-void	freeallstacks(t_stack *s)
+void	freeallstacks(t_stack *a, t_stack *b)
 {
-	free(s->other->arr);
-	free(s->other);
-	free(s->arr);
-	free(s);
+	free(a->arr);
+	free(a);
+	free(b->arr);
+	free(b);
 }
 
 t_stack	*stack_startup(int *arr, int max_size)
@@ -74,5 +74,7 @@ t_stack	*stack_startup(int *arr, int max_size)
 	b = initstack(intarr, 'b', 0, max_size);
 	loadotherstack(a, b);
 	loadotherstack(b, a);
+	// updateminmax(a);
+	// updateminmax(b);
 	return (a);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_revrotate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:32:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/30 22:51:09 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/06 17:11:32 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	revrotate(t_stack *s)
 	last = s->arr[s->size - 1];
 	ft_memmove(s->arr + 1, s->arr, (s->size - 1) * sizeof(int));
 	(s->arr)[0] = last;
+	// updateminmax(s);
 }
 
 void	rra(t_stack *a)

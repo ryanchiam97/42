@@ -1,3 +1,6 @@
 {
-    "cmake.sourceDirectory": "/home/user42/42/42files/CommonCore/pushswap/push_swap_visualizer"
+    "cmake.sourceDirectory": "/home/user42/42/42files/CommonCore/pushswap/push_swap_visualizer",
+    "files.associations": {
+        "random": "c"
+    }
 }

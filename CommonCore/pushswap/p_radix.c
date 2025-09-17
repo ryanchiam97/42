@@ -6,111 +6,149 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:54 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/04 04:26:12 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/06 17:07:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void	pushover(t_stack *s, int pushbit, int rot, int power)
-{
-	int	final;
+// int	pushback(t_stack *s)
+// {
+// 	int	i;
 
-	final = 0;
-	while (rot != 0 || final == 1)
-	{
-		if (pushbit ^ ((s->arr[0] >> power) & 1))
-		{
-			if (rot > 0)
-				s->rotate(s);
-			else if (rot < 0)
-				s->revrotate(s);
-		}
-		else
-			s->push_to_other(s, s->other);
-		if (rot > 0)
-			rot--;
-		if (rot < 0)
-			rot++;
-		if (rot == 0)
-			final++;
-	}
-	return ;
-}
+// 	i = 0;
+// 	while (s->other->size > 0)
+// 	{
+// 		s->push_to_self(s, s->other);
+// 		i++;
+// 	}
+// 	return (i);
+// }
 
-void	pushback(t_stack *s)
-{
-	while (s->other->size > 0)
-	{
-		s->push_to_self(s, s->other);
-	}
-}
+// int	getchunksize(t_stack *s)
+// {
+// 	int	chunksize;
 
-int	determinechunksize(t_stack *s, double alpha, int nmin, int nmax)
-{
-	double	raw;
+// 	chunksize = isqrt(s->size);
+// 	if (chunksize > 64)
+// 		return (64);
+// 	return (chunksize); 
+// }
+// void	sortchunk(t_stack *s)
+// {
+// 	if (s->size <= 3)
+// 		sortthree(s);
+// 	else if (s->size <= 5)
+// 		sortfourfive(s);
+// 	else
+// 		globalradixsort(s, determinepower(s->size - 1));
+// }
 
-	if (s->size < nmin)
-		return (0);
-	else
-	{
-		raw = alpha * (double)isqrt(s->size) * (double)ilog2(s->size);
-		return ((int)imin(imax((int)raw, nmin), nmax));
-	}
-}
+// void	sendoverchunk(t_stack *s, int start, int end)
+// {
+// 	int	pos;
+// 	int	chunksize;
 
-int	onechunk(t_stack* s, int mincborder, int maxcborder)
-{
-	int	i;
-	int	count;
-	int	p;
-	int	r;
+// 	chunksize = end - start + 1;
+// 	while (chunksize > 0)
+// 	{
+// 		pos = 0;
+// 		while (!(s->arr[pos] >= start && s->arr[pos] <= end))
+// 			pos++;
+// 		if (pos <= s->size / 2)
+// 			while (pos--)
+// 				s->rotate(s);
+// 		else
+// 			while (pos++ < s->size)
+// 				s->revrotate(s);
+// 		if (chunksize > 5)
+// 			smartpush(s, s->other);
+// 		else
+// 			s->push_to_other(s, s->other);
+// 		chunksize--;
+// 	}
+// 	if (end - start + 1 <= 5)
+// 		sortfourfive (s->other);
+// }
 
-	i = 0;
-	count = maxcborder - mincborder;
-	while(i < s->size || i < count)
-	{
-		if (s->arr[i] >= mincborder && s->arr[i] <= maxcborder)
-		{
-			s->push_to_other(s, s->other);
-			p++;
-		}
-		else
-		{
-			s->rotate(s);
-			r++;
-		}
-		i++;
-	}
-	return (r / p);
-}
+// void	handlemiddlecase(t_stack *b, int aVal)
+// {
+// 	int	smallestbiggerval;
+// 	int	smallestbiggerindex;
+// 	int	i;
 
-void	chunkdecisionlayer(t_stack *s, int r_per_p_threshold, int CincreFractnOfRemain)
-{
-	int	chunksize;
-	int	minCborder;
-	int	maxCborder;
-	int	rot_per_push;
+// 	smallestbiggerval = b->max;
+// 	i = 0;
+// 	while (i < b->size)
+// 	{
+// 		if (b->arr[i] > aVal && b->arr[i] < smallestbiggerval)
+// 		{
+// 			smallestbiggerval = b->arr[i];
+// 			smallestbiggerindex = i;
+// 		}
+// 		i++;
+// 	}
+// 	while (b->arr[0] != smallestbiggerval)
+// 	{
+// 		if (smallestbiggerindex <= b->size /2)
+// 			b->rotate(b);
+// 		else
+// 			b->revrotate(b);
+// 	}
+// 	b->other->push_to_other(b->other, b);
+// }
 
-	//chunksize = determinechunksize(s, 0.3, 12, s->size / 5);
-	chunksize = 50;
-	minCborder = 0;
-	maxCborder = chunksize;
-	while (maxCborder < s->size)
-	{
-		rot_per_push = onechunk(s, minCborder, maxCborder);
-		pushback(s);
-		if (rot_per_push > r_per_p_threshold)
-			chunksize+=((s->size - maxCborder) / CincreFractnOfRemain);
-		minCborder = maxCborder + 1;
-		maxCborder = imin((minCborder + chunksize), s->size);
-	}
-	return (globalradixsort(s, determinepower(s->size - 1)));
-}
-//get size of chunk and range
-// rotate and push over if in range
-// do minichunk radix
-// repeat
+// void	smartpush(t_stack *a, t_stack *b)
+// {
+// 	int	aVal;
+// 	int	smallestbiggernum;
+// 	int	i;
+
+// 	aVal = a->arr[0];
+// 	if (b->size <= 1)
+// 		return (a->push_to_other(a, b));
+// 	if (aVal < b->min || aVal > b->max)
+// 	{
+// 		while (b->minindex !=0)
+// 		{
+// 			if (b->minindex <= b->size/2)
+// 				b->rotate(b);
+// 			else
+// 				b->revrotate(b);
+// 		}
+// 		a->push_to_other(a, b);
+// 	}
+// 	else
+// 		handlemiddlecase(b, aVal);
+// }
+
+// void	chunkdecisionlayer(t_stack *s)
+// {
+// 	int	chunksize;
+// 	int	chunkremaining;
+// 	int	chunkstart;
+// 	int	chunkend;
+// 	int	pushedback;
+
+// 	chunksize = getchunksize(s);
+// 	chunkremaining = (s->size + chunksize - 1) / chunksize;
+// 	chunkstart = 0;
+// 	chunkend = chunksize;
+// 	while (chunkremaining--)
+// 	{
+// 		//scan through and send over any in range(optimized)
+// 		sendoverchunk(s, chunkstart, chunkend);
+// 		pushedback = pushback(s);
+// 		chunkstart = chunkend + 1;
+// 		chunkend = chunkstart + chunksize;
+// 		if (chunkend >= s->size)
+// 			chunkend = s->size - 1;
+// 		while (pushedback--)
+// 			s->rotate(s);
+// 	}
+	
+// 	return (globalradixsort(s, determinepower(s->size - 1)));
+// }
 
 void	globalradixsort(t_stack *s, int totalbinarydigits)
 {
@@ -134,25 +172,25 @@ void	globalradixsort(t_stack *s, int totalbinarydigits)
 	}
 }
 
-void printout_stack_info(t_stack *s)
-{
-	int ilim = s->size;
-	int jlim = s->other->size;
-	int i = 0;
-	int j = 0;
-	printf("stack %c: ", s->name);
-	while (i < ilim)
-	{
-		printf("%i ", s->arr[i]);
-		i++;
-	}
-	printf("\t");
-	printf("stack %c: ", s->other->name);
-	while (j < jlim)
-	{
-		printf("%i ", s->other->arr[j]);
-		j++;
-	}
-	printf("\n");
-}
+// void printout_stack_info(t_stack *s)
+// {
+// 	int ilim = s->size;
+// 	int jlim = s->other->size;
+// 	int i = 0;
+// 	int j = 0;
+// 	printf("stack %c: ", s->name);
+// 	while (i < ilim)
+// 	{
+// 		printf("%i ", s->arr[i]);
+// 		i++;
+// 	}
+// 	printf("\t");
+// 	printf("stack %c: ", s->other->name);
+// 	while (j < jlim)
+// 	{
+// 		printf("%i ", s->other->arr[j]);
+// 		j++;
+// 	}
+// 	printf("\n");
+// }
 

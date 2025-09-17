@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_rotate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:33:15 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/30 22:50:44 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/06 17:11:20 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	rotate(t_stack *s)
 	first = s->arr[0];
 	ft_memmove(s->arr, s->arr + 1, (s->size - 1) * sizeof(int));
 	(s->arr)[s->size - 1] = first;
+	// updateminmax(s);
 }
 
 void	ra(t_stack *a)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op_push.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:29:45 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/30 22:51:25 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/06 17:11:27 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	push(t_stack *src, t_stack *dst)
 	dst->arr[0] = pushnum;
 	src->size--;
 	dst->size++;
+	// updateminmax(src);
+	// updateminmax(dst);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/04 04:27:53 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/06 17:08:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	main(int argc, char **argv)
 		else if (size < 6)
 			sortfourfive(a);
 		else
-			chunkdecisionlayer(a, 6, 10);
-		freeallstacks(a);
+			globalradixsort(a, determinepower(a->size - 1));
+		freeallstacks(a,a->other);
 	}
 }
 /*
