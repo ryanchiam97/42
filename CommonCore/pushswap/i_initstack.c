@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 15:56:52 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/18 00:18:32 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/18 21:07:16 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	loadotherstack(t_stack *s, t_stack *other)
 	s->other = other;
 }
 
-void	freeallstacksandinput(t_stack *a, t_stack *b, int *intarr)
+void	freestacksandinput(t_stack *a, t_stack *b, int *intarr)
 {
 	free(a->arr);
 	free(a);

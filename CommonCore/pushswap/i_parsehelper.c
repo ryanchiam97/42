@@ -6,31 +6,11 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:45 by rchiam            #+#    #+#             */
-/*   Updated: 2025/08/30 17:00:48 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/18 21:12:50 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
-
-int	checkdupes(int *int_arr, int size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size -1)
-	{
-		j = i + 1;
-		while (j < size)
-		{
-			if (int_arr[i] == int_arr[j])
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
 
 void	index_arr(int **int_arr, int size)
 {
@@ -86,12 +66,22 @@ int	get_char_arr_size(char **arr)
 	return (i);
 }
 
+void	freestrarr(char **char_arr)
+{
+	int	i;
+
+	i = 0;
+	while (char_arr[i])
+		free(char_arr[i++]);
+	free(char_arr);
+}
+
 int	*parseinput(char *input, int *returnsize)
 {
-	char	**char_arr;
-	int		*int_arr;
-	int		i;
-	int		size;
+	char		**char_arr;
+	int			*int_arr;
+	long long	atoioutcome;
+	int			size;
 
 	char_arr = ft_split(input, ' ');
 	if (!char_arr)
@@ -99,16 +89,16 @@ int	*parseinput(char *input, int *returnsize)
 	size = get_char_arr_size(char_arr);
 	int_arr = malloc(sizeof(int) * size);
 	if (!int_arr)
-	{
-		i = 0;
-		while (char_arr[i])
-			free(char_arr[i++]);
-		return (free(char_arr), NULL);
-	}
+		return (freestrarr(char_arr), NULL);
 	*returnsize = size;
 	while (size--)
 	{
-		int_arr[size] = ft_atoi(char_arr[size]);
+		atoioutcome = ft_atoi(char_arr[size]);
+		if (atoioutcome > (long long) INT_MAX
+			|| atoioutcome < (long long) INT_MIN)
+			return (free(char_arr[size]), NULL);
+		else
+			int_arr[size] = atoioutcome;
 		free(char_arr[size]);
 	}
 	return (free(char_arr), int_arr);

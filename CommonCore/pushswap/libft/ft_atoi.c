@@ -6,16 +6,16 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/30 23:05:41 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/17 22:58:18 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/18 20:48:03 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+long long	ft_atoi(const char *str)
 {
-	int	i;
-	int	sign;
+	long long	i;
+	long long	sign;
 
 	i = 0;
 	sign = 1;

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/18 00:19:16 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 00:20:39 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,25 @@ int	main(int argc, char **argv)
 	int		size;
 	t_stack	*a;
 
-	if (argc >= 2)
-	{
-		size = parse(argc, &argv, &int_arr);
-		if (size == -1)
-			return (-1);
-		a = stack_startup(int_arr, size);
-		if (size < 2)
-			return (freeallstacksandinput(a, a->other, int_arr), 0);
-		else if (size == 2)
-			sorttwo(a);
-		else if (size == 3)
-			sortthree(a);
-		else if (size < 6)
-			sortfourfive(a);
-		else
-			globalradixsort(a, determinepower(a->size - 1));
-		freeallstacksandinput(a, a->other, int_arr);
-	}
+	if (checkargvissues(argc, argv))
+		return (write(2, "Error\n", 6), -1);
+	size = parse(argc, &argv, &int_arr);
+	if (size == -1)
+		return (write(2, "Error\n", 6), -1);
+	if (issorted(int_arr, size))
+		return (free(int_arr), 0);
+	a = stack_startup(int_arr, size);
+	if (size < 2)
+		return (freestacksandinput(a, a->other, int_arr), 0);
+	else if (size == 2)
+		sorttwo(a);
+	else if (size == 3)
+		sortthree(a);
+	else if (size < 6)
+		sortfourfive(a);
+	else
+		globalradixsort(a, determinepower(a->size - 1));
+	freestacksandinput(a, a->other, int_arr);
 }
 /*
 For maximum project validation (100%) and eligibility for bonuses, you must:

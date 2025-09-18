@@ -6,11 +6,31 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:04:43 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/18 00:22:50 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 00:18:24 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+int	checkdupes(int *int_arr, int size)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < size -1)
+	{
+		j = i + 1;
+		while (j < size)
+		{
+			if (int_arr[i] == int_arr[j])
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
 
 char	*safeaddstring(char *main, char *new)
 {
@@ -37,10 +57,12 @@ int	check_string(char *str)
 	i = 0;
 	if (ft_strlen(str) == 0 || (ft_strlen(str) == 1 && !ft_isdigit(str[i])))
 		return (0);
+	if (weirdending(str))
+		return (0);
 	while (str[i])
 	{
 		if (
-			(ft_isalnum(str[i]) && !ft_isdigit(str[i]))
+			(ft_isalnum(str[i]) && !ft_isdigit(str[i]))// if not a digit
 			|| (str[i + 1] && (str[i] == '-' || str[i] == '+')
 				&& ((str[i + 1] == '-' || str[i + 1] == '+')
 					|| !ft_isdigit(str[i + 1])
@@ -64,7 +86,9 @@ int	parse_int_arr(char **str, int *sizeadr, int ***r_arr)
 	if (check_string(*str))
 		int_arr = parseinput(*str, sizeadr);
 	else
-		return (write(2, "Error\n", 6), 0);
+		return (0);
+	if (!int_arr)
+		return (0);
 	index_arr(&int_arr, *sizeadr);
 	if (checkdupes(int_arr, *sizeadr))
 	{
@@ -72,7 +96,7 @@ int	parse_int_arr(char **str, int *sizeadr, int ***r_arr)
 		return (1);
 	}
 	else
-		return (write(2, "Error\n", 6), 0);
+		return (0);
 }
 
 int	parse(int argcount, char ***args, int **return_array)

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 20:44:06 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/18 00:18:06 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 00:00:38 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,18 @@ struct s_stack
 // int 					isqrt(int n);
 // void    				updateminmax(t_stack *s);
 // void    				updateminmaxzero(t_stack *s);
+int						checkargvissues(int argc, char **argv);
+int						isempty(char *str);
+int						issorted(int *int_arr, int size);
+int						weirdending(char *str);
+
 int						get_char_arr_size(char **arr);
 int						*parseinput(char *input, int *returnsize);
 void					index_arr(int **int_arr, int size);
 int						determinepower(int max);
-int						checkdupes(int *int_arr, int size);
+void					freestrarr(char **char_arr);
 
+int						checkdupes(int *int_arr, int size);
 int						check_string(char *str);
 char					*safeaddstring(char *main, char *new);
 int						parse(int argcount, char ***args, int **return_array);
@@ -59,7 +65,7 @@ int						parse_int_arr(char **str, int *sizeadr, int ***r_arr);
 t_stack					*initstack(int *arr, char name, int size, int maxsize);
 void					assign_ops(t_stack *s);
 void					loadotherstack(t_stack *s, t_stack *other);
-void					freeallstacksandinput(t_stack *a, t_stack *b, int *intarr);
+void					freestacksandinput(t_stack *a, t_stack *b, int *intarr);
 t_stack					*stack_startup(int *arr, int max_size);
 
 int						push(t_stack *src, t_stack *dst);

@@ -3,14 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   p_utils.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 03:51:55 by user42            #+#    #+#             */
-/*   Updated: 2025/09/06 17:07:43 by user42           ###   ########.fr       */
+/*   Updated: 2025/09/19 00:24:12 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
+
+int	isempty(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	weirdending(char *str)
+{
+	int	i;
+
+	i = ft_strlen(str);
+	while (i--)
+	{
+		if (ft_isdigit(str[i]))
+			return (0);
+		if (str[i] == '-' || str[i] == '+')
+			return (1);
+		if (str[i] != ' ' && !ft_isdigit(str[i]))
+			return (1);
+	}
+	return (0);
+}
+
+
+int	checkargvissues(int argc, char **argv)
+{
+	int			i;
+	long long	num;
+
+	if (argc < 2)
+		return (1);
+	i = 1;
+	while (i < argc)
+	{
+		if (isempty(argv[i]))
+			return (1);
+		if (weirdending(argv[i]))
+			return (1);
+		num = ft_atoi(argv[i]);
+		if (num > (long long) INT_MAX
+			|| num < (long long) INT_MIN)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	issorted(int *int_arr, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		if (int_arr[i] > int_arr[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 // int isqrt(int n)
 // {
