@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:04:43 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/19 20:29:40 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 22:09:51 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	parse_int_arr(char **str, int *sizeadr, int ***r_arr)
 		return (1);
 	}
 	else
-		return (0);
+		return (free(int_arr), 0);
 }
 
 int	parse(int argcount, char ***args, int **return_array)

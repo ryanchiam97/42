@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/19 00:20:39 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 21:58:10 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	main(int argc, char **argv)
 	int		size;
 	t_stack	*a;
 
+	if (argc == 1)
+		return (0);
 	if (checkargvissues(argc, argv))
 		return (write(2, "Error\n", 6), -1);
 	size = parse(argc, &argv, &int_arr);
