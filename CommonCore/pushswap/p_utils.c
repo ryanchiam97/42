@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 03:51:55 by user42            #+#    #+#             */
-/*   Updated: 2025/09/19 00:24:12 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 20:43:15 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	weirdending(char *str)
 	}
 	return (0);
 }
-
 
 int	checkargvissues(int argc, char **argv)
 {

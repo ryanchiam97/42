@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 23:04:43 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/19 00:18:24 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 20:29:40 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_string(char *str)
 	while (str[i])
 	{
 		if (
-			(ft_isalnum(str[i]) && !ft_isdigit(str[i]))// if not a digit
+			(!ft_isdigit(str[i]) && ft_isalnum(str[i]))
 			|| (str[i + 1] && (str[i] == '-' || str[i] == '+')
 				&& ((str[i + 1] == '-' || str[i + 1] == '+')
 					|| !ft_isdigit(str[i + 1])
@@ -156,7 +156,6 @@ The program should work with INT MAX & INT MIN
 ./push_swap "2147483647 843 56544 24394"
 these examples should work and sort your list
 
-Nothing has been specified when strings and int are mixed. It's up to you what you want to do
 ./push_swap "1 2 4 3" 76 90 "348 05"
 
 (NOT DONE)

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 15:56:52 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/18 21:07:16 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/19 20:43:31 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,5 @@ t_stack	*stack_startup(int *arr, int max_size)
 	b = initstack(intarr, 'b', 0, max_size);
 	loadotherstack(a, b);
 	loadotherstack(b, a);
-	// updateminmax(a);
-	// updateminmax(b);
 	return (a);
 }
