@@ -45,7 +45,7 @@ BONUS_SRC = ft_lstnew_bonus.c \
 OBJECTS = $(SOURCES:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 BONUS_NAME = $(NAME)
 
@@ -55,7 +55,7 @@ all : $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME) : $(OBJECTS) 
-	ar rcs $(NAME) $(OBJECTS)
+	ar rcs $@ $?
 
 bonus : $(OBJECTS) $(BONUS_OBJ)
 	ar rcs $(NAME) $(OBJECTS) $(BONUS_OBJ)

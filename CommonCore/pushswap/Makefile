@@ -18,18 +18,20 @@ SOURCES = 	pushswap.c\
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
-CFLAGS = -g -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
+
+MAKE = make
 
 all : $(NAME)
 
 %.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(LIBFTLIB) :
-	make -C $(LIBFTDIR) bonus
-
 $(NAME): $(OBJECTS) $(LIBFTLIB)
 	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFTDIR)/$(LIBFTLIB) -o $(NAME)
+
+$(LIBFTLIB):
+	$(MAKE) -C $(LIBFTDIR) bonus
 
 clean:
 	make -C $(LIBFTDIR) clean
