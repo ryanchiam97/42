@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 03:51:55 by user42            #+#    #+#             */
-/*   Updated: 2025/09/19 20:43:15 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/22 21:10:38 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ int	checkargvissues(int argc, char **argv)
 	int			i;
 	long long	num;
 
-	if (argc < 2)
-		return (1);
 	i = 1;
 	while (i < argc)
 	{
@@ -59,7 +57,8 @@ int	checkargvissues(int argc, char **argv)
 			return (1);
 		num = ft_atoi(argv[i]);
 		if (num > (long long) INT_MAX
-			|| num < (long long) INT_MIN)
+			|| num < (long long) INT_MIN
+		)
 			return (1);
 		i++;
 	}

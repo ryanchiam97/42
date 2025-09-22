@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:45 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/18 21:12:50 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/22 20:21:20 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	*parseinput(char *input, int *returnsize)
 		return (NULL);
 	size = get_char_arr_size(char_arr);
 	int_arr = malloc(sizeof(int) * size);
-	if (!int_arr)
+	if (!int_arr || checkargvissues(size, char_arr))
 		return (freestrarr(char_arr), NULL);
 	*returnsize = size;
 	while (size--)

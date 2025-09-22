@@ -18,7 +18,7 @@ SOURCES = 	pushswap.c\
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 MAKE = make
 

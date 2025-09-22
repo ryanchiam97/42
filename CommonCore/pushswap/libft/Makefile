@@ -45,7 +45,7 @@ BONUS_SRC = ft_lstnew_bonus.c \
 OBJECTS = $(SOURCES:.c=.o)
 BONUS_OBJ = $(BONUS_SRC:.c=.o)
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 BONUS_NAME = $(NAME)
 
