@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 20:34:45 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/22 20:21:20 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:09:50 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	*parseinput(char *input, int *returnsize)
 {
 	char		**char_arr;
 	int			*int_arr;
-	long long	atoioutcome;
+	long long	outcome;
 	int			size;
 
 	char_arr = ft_split(input, ' ');
@@ -89,16 +89,15 @@ int	*parseinput(char *input, int *returnsize)
 	size = get_char_arr_size(char_arr);
 	int_arr = malloc(sizeof(int) * size);
 	if (!int_arr || checkargvissues(size, char_arr))
-		return (freestrarr(char_arr), NULL);
+		return (freestrarr(char_arr), free(int_arr), NULL);
 	*returnsize = size;
 	while (size--)
 	{
-		atoioutcome = ft_atoi(char_arr[size]);
-		if (atoioutcome > (long long) INT_MAX
-			|| atoioutcome < (long long) INT_MIN)
+		outcome = ft_atoi(char_arr[size]);
+		if (outcome > (long long)INT_MAX || outcome < (long long)INT_MIN)
 			return (free(char_arr[size]), NULL);
 		else
-			int_arr[size] = atoioutcome;
+			int_arr[size] = outcome;
 		free(char_arr[size]);
 	}
 	return (free(char_arr), int_arr);

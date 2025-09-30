@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 03:51:55 by user42            #+#    #+#             */
-/*   Updated: 2025/09/22 21:10:38 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:07:05 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,28 @@ int	weirdending(char *str)
 }
 
 int	checkargvissues(int argc, char **argv)
+{
+	int			i;
+	long long	num;
+
+	i = 0;
+	while (i < argc)
+	{
+		if (isempty(argv[i]))
+			return (1);
+		if (weirdending(argv[i]))
+			return (1);
+		num = ft_atoi(argv[i]);
+		if (num > (long long) INT_MAX
+			|| num < (long long) INT_MIN
+		)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	checkargvissues2(int argc, char **argv)
 {
 	int			i;
 	long long	num;

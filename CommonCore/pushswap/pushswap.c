@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 22:01:39 by rchiam            #+#    #+#             */
-/*   Updated: 2025/09/22 20:40:27 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/09/30 21:07:29 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 1)
 		return (0);
-	if (checkargvissues(argc, argv))
+	if (checkargvissues(argc - 1, argv + 1))
 		return (write(2, "Error\n", 6), -1);
 	size = parse(argc, &argv, &int_arr);
 	if (size == -1)
