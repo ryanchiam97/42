@@ -2,7 +2,9 @@ NAME = fractol
 
 #sources
 SOURCES = 	main.c\
-			fractol.c
+			fractol.c\
+			window.c\
+			render.c
 
 #objects
 OBJECTS = $(SOURCES:.c=.o)
