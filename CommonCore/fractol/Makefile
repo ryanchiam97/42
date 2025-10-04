@@ -17,25 +17,27 @@ MAKE = make
 #Libft
 LIBFT_DIR = ./libft
 LIBFT_LIB = libft.a
-LIBFT_FLAGS = -lft -L$(LIBFT_DIR) -I$(LIBFT_DIR)
-$(LIBFT_DIR)/$(LIBFT_LIB):
-	@$(MAKE) -C $(LIBFT_DIR) bonus
+LIBFT_FLAGS = -lft
 
 #Mlx Lib
 MLX_DIR = ./mlx_linux
 MLX_LIB = libmlx.a
-MLX_FLAGS = -lmlx -lm -lz -lXext -lX11 -L$(MLX_DIR) -I$(MLX_DIR)
-$(MLX_DIR)/$(MLX_LIB):
-	@$(MAKE) -C $(MLX_DIR)
+MLX_FLAGS = -lmlx -lm -lz -lXext -lX11
 
 #rules
 all : $(NAME)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
 $(NAME): $(OBJECTS) $(LIBFT_DIR)/$(LIBFT_LIB) $(MLX_DIR)/$(MLX_LIB)
-	$(CC) $(CFLAGS) $(OBJECTS) $(MLX_FLAGS) $(LIBFT_FLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(MLX_DIR) -L$(LIBFT_DIR) $(MLX_FLAGS) $(LIBFT_FLAGS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MLX_DIR) -c $< -o $@
+
+$(LIBFT_DIR)/$(LIBFT_LIB):
+	@$(MAKE) -C $(LIBFT_DIR) bonus
+
+$(MLX_DIR)/$(MLX_LIB):
+	@$(MAKE) -C $(MLX_DIR)
 
 clean: 
 	@$(MAKE) -C $(LIBFT_DIR) clean
