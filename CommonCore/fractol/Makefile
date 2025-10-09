@@ -4,14 +4,15 @@ NAME = fractol
 SOURCES = 	main.c\
 			fractol.c\
 			window.c\
-			render.c
+			render.c\
+			panzoom.c
 
 #objects
 OBJECTS = $(SOURCES:.c=.o)
 
 #misc
 CC = cc
-CFLAGS = -Wextra -Werror -Wall
+CFLAGS = -g -Wextra -Werror -Wall
 MAKE = make
 
 #Libft

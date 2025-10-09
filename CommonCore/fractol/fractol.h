@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/04 16:46:41 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 01:56:31 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,21 @@ typedef struct s_camera
 	double	re_max;
 	double	im_min;
 	double	im_max;
-	int		max_iter;
-	int		colorshift;
+	int		mx_iter;
+	int		c_shift;
 }	t_camera;
+
+typedef struct s_z
+{
+	double	re;
+	double	im;
+}	t_z;
+
+typedef struct s_fractol
+{
+	char	*name;
+	t_z		input;
+}	t_fractol;
 
 typedef struct s_data
 {
@@ -52,31 +64,28 @@ typedef struct s_data
 	t_fractol	fractol;
 }	t_data;
 
-typedef struct fractol
-{
-	char	*name;
-	t_z		input;
-}	t_fractol;
-
-typedef struct s_z
-{
-	int	x;
-	int	y;
-}	t_z;
 //main.c
 int		main(int argc, char **argv);
 int		ft_close(t_data *data);
 int		ft_keypress(int keycode, t_data *data);
+int		ft_mousehook(int button, int x, int y, t_data *data);
+
 //render.c
-void	color_pixel(t_img *img, int x, int y, int color);
+void	color_pixel(t_img *img, double x, double y, int color);
 void	render(t_data *data);
+double	map_x(t_data *data, int x);
+double	map_y(t_data *data, int y);
 //window.c
-void	pixel_to_image(t_data *data, int x, int y, int color);
 void	init_image(t_data *data);
 void	defaultcamera(t_data *data);
 //fractol.c
-int		get_fractol_count(int x, int y);
-int		count_to_color(int count, int color_shift, int max_iter);
+int		alldigit(char *str);
+int		mandelbrot_count(double re, double im);
+int		julia_count(double re, double im, t_data *data);
+int		get_fractol_count(double zx, double zy, double cx, double cy);
+int		count_to_color(int count, int color_shift, int mx_iter);
 int		determinefractol(int argc, char **argv, t_data *data);
-
+//panzoom.c
+void	zoom(t_data *data, int mouse_x, int mouse_y, double zoom);
+void	pan(t_data *data, double re_shift, double im_shift);
 #endif

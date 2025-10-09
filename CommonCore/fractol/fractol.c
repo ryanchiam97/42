@@ -6,24 +6,41 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:21 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/04 17:27:06 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 02:10:14 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+int	alldigit(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	determinefractol(int argc, char **argv, t_data *data)
 {
 	int	error;
 
-	if (argv[1] == "Manderbrot" && argc == 2)
+	error = 0;
+	if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0 && argc == 2)
 		data->fractol.name = argv[1];
-	else if (argv[1] == "Julia" && argc == 4
-		&& ft_isdigit(argv[2]) && ft_isdigit(argv[3]))
+	else if (ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4
+			&& alldigit(argv[2]) && alldigit(argv[3]))
 	{
 		data->fractol.name = argv[1];
-		data->fractol.input.x = ft_atoi(argv[2]);
-		data->fractol.input.y = ft_atoi(argv[3]);
+		data->fractol.input.re = ft_atoi(argv[2]);
+		data->fractol.input.im = ft_atoi(argv[3]);
 	}
 	else
 		error = 1;
@@ -40,46 +57,53 @@ int	determinefractol(int argc, char **argv, t_data *data)
 	return (1);
 }
 
-// mandelbrot
+// mandelbrot / julia equation
 // z_n+1 	= z^2_n + c
 // 			= (zx + zyi)^2 + (x + y)
 // 			= (zx * zx + 2zxzyi - zy * zy) + cx + cy
 //			= (zx*zx + cx + cy - zy * zy)x + (2 * zx * zy)y
+// mandelbrot
 // z_0 = 0 + 0i
 // c = pixel coords
-int	fractol(t_data *data)
+// julia
+// z_0 = pixelcoords
+// c = constant from input
+
+int	mandelbrot_count(double re, double im)
 {
-	if (data->fractol.name == "Mandelbrot")
-		// do get_fractol_count
-	else if (data->fractol.name == "Julia")
-		//
-	//mandelbrot: fractal_iter((0,0), (re,im), MAX_ITERATIONS)
-	//julia: fractal_iter((re,im), (cx,cy), MAX_ITERATIONS)
+	return (get_fractol_count(0, 0, re, im));
 }
 
-int	get_fractol_count(int x, int y)
+int	julia_count(double re, double im, t_data *data)
 {
-	t_z	zn;
-	t_z	ztemp;
-	int	count;
+	t_z	c;
+
+	c.re = data->fractol.input.re;
+	c.im = data->fractol.input.im;
+	return (get_fractol_count(re, im, c.re, c.im));
+}
+
+int	get_fractol_count(double zx, double zy, double cx, double cy)
+{
+	int		count;
+	double	tmp_x;
+	double	tmp_y;
 
 	count = 0;
-	zn.x = 0;
-	zn.y = 0;
-	while (count < MAX_ITERATIONS || (zn.x * zn.x) + (zn.y * zn.y) > 4)
+	while (zx * zx + zy * zy <= 4 && count < MAX_ITERATIONS)
 	{
-		ztemp.x = zn.x * zn.x + x + y - (zn.y * zn.y);
-		ztemp.y = 2 * zn.x * zn.y;
-		zn.x = ztemp.x;
-		zn.y = ztemp.y;
+		tmp_x = zx * zx - zy * zy + cx;
+		tmp_y = 2 * zx * zy + cy;
+		zx = tmp_x;
+		zy = tmp_y;
 		count++;
 	}
 	return (count);
 }
 
-int	count_to_color(int count, int color_shift, int max_iter)
+int	count_to_color(int count, int color_shift, int mx_iter)
 {
-	if (count >= MAX_ITERATIONS || count >= max_iter)
+	if (count >= MAX_ITERATIONS || count >= mx_iter)
 		return (0x000000);
 	return ((count * 0x123456 + color_shift) % 0xFFFFFF);
 }
