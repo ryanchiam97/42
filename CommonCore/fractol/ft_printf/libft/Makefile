@@ -20,7 +20,6 @@ SOURCES = 	ft_isalpha.c \
 			ft_memcmp.c \
 			ft_strnstr.c \
 			ft_atoi.c \
-			ft_atof.c \
 			ft_calloc.c \
 			ft_strdup.c \
 			ft_substr.c \
@@ -56,7 +55,7 @@ all : $(NAME)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME) : $(OBJECTS) 
-	ar rcs $@ $?
+	ar rcs $(NAME) $(OBJECTS)
 
 bonus : $(OBJECTS) $(BONUS_OBJ)
 	ar rcs $(NAME) $(OBJECTS) $(BONUS_OBJ)

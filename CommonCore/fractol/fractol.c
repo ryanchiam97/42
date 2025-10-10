@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:21 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 02:10:14 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 15:49:40 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,9 @@ int	alldigit(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]) || (str[i] == '.' && str[i + 1]))
 			return (0);
 		i++;
-	}
-	return (1);
-}
-
-int	determinefractol(int argc, char **argv, t_data *data)
-{
-	int	error;
-
-	error = 0;
-	if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0 && argc == 2)
-		data->fractol.name = argv[1];
-	else if (ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4
-			&& alldigit(argv[2]) && alldigit(argv[3]))
-	{
-		data->fractol.name = argv[1];
-		data->fractol.input.re = ft_atoi(argv[2]);
-		data->fractol.input.im = ft_atoi(argv[3]);
-	}
-	else
-		error = 1;
-	if (error == 1)
-	{
-		printf("Input Error\n");
-		printf("****************************************************\n");
-		printf("*Only Accepted Inputs:                             *\n");
-		printf("*./fractol Mandelbrot                              *\n");
-		printf("*./fractol Julia X(int) Y(int)                     *\n");
-		printf("****************************************************\n");
-		return (0);
 	}
 	return (1);
 }
@@ -78,8 +49,8 @@ int	julia_count(double re, double im, t_data *data)
 {
 	t_z	c;
 
-	c.re = data->fractol.input.re;
-	c.im = data->fractol.input.im;
+	c.re = data->f.z.re;
+	c.im = data->f.z.im;
 	return (get_fractol_count(re, im, c.re, c.im));
 }
 

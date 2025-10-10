@@ -5,7 +5,7 @@ SOURCES = 	main.c\
 			fractol.c\
 			window.c\
 			render.c\
-			panzoom.c
+			panzoomcolor.c
 
 #objects
 OBJECTS = $(SOURCES:.c=.o)
@@ -25,14 +25,19 @@ MLX_DIR = ./mlx_linux
 MLX_LIB = libmlx.a
 MLX_FLAGS = -lmlx -lm -lz -lXext -lX11
 
+#printf
+FTPRINTF_DIR = ./ft_printf
+FTPRINTF_LIB = ftprintf.a
+FTPRINTF_FLAGS = -lftprintf
+
 #rules
 all : $(NAME)
 
-$(NAME): $(OBJECTS) $(LIBFT_DIR)/$(LIBFT_LIB) $(MLX_DIR)/$(MLX_LIB)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(MLX_DIR) -L$(LIBFT_DIR) $(MLX_FLAGS) $(LIBFT_FLAGS)
+$(NAME): $(OBJECTS) $(LIBFT_DIR)/$(LIBFT_LIB) $(MLX_DIR)/$(MLX_LIB) $(FTPRINTF_DIR)/$(FTPRINTF_LIB)
+	$(CC) $(CFLAGS) $(OBJECTS) -o $(NAME) -L$(MLX_DIR) -L$(LIBFT_DIR) -L$(FTPRINTF_DIR) $(MLX_FLAGS) $(LIBFT_FLAGS) $(FTPRINTF_FLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MLX_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(MLX_DIR) -I$(FTPRINTF_DIR) -c $< -o $@
 
 $(LIBFT_DIR)/$(LIBFT_LIB):
 	@$(MAKE) -C $(LIBFT_DIR) bonus
@@ -40,13 +45,18 @@ $(LIBFT_DIR)/$(LIBFT_LIB):
 $(MLX_DIR)/$(MLX_LIB):
 	@$(MAKE) -C $(MLX_DIR)
 
+$(FTPRINTF_DIR)/$(FTPRINTF_LIB):
+	@$(MAKE) -C $(FTPRINTF_DIR)
+
 clean: 
 	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -C $(FTPRINTF_DIR) clean
 	rm -f $(OBJECTS)
 
 fclean: clean
 	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(FTPRINTF_DIR) fclean
 	rm -f $(NAME)
 
 re: fclean all
