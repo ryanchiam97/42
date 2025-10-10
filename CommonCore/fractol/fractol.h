@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 16:15:37 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:32:26 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <X11/X.h>
 # include <X11/keysymdef.h>
 # include "ft_printf/ft_printf.h"
+# include <math.h>
 
 # define WIDTH 800
 # define HEIGHT 600

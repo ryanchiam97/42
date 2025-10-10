@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 12:56:24 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 16:25:43 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:30:56 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,4 @@ float	ft_atof(const char *str)
 	result = 0;
 	tofloat(str, &result, 0);
 	return (result / count);
-}
+}// To Fix

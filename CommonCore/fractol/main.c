@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:50:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 16:16:03 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:32:12 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	instructions(void)
 	ft_printf("* OR     ./fractol Julia X Y                       *\n");
 	ft_printf("* OR     ./BurningShip                             *\n");
 	ft_printf("****************************************************\n");
+	// need to make burning ship
+	//	=> Add the flags for 
+	// need to fix the atof in the libft
 }
 
 int	determinefractol(int argc, char **argv, t_data *data)
