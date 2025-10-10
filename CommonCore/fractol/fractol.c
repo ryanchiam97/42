@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:21 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 15:49:40 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:23:00 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	julia_count(double re, double im, t_data *data)
 
 	c.re = data->f.z.re;
 	c.im = data->f.z.im;
+	printf("c.re is %f and c.im is %f\n", c.re, c.im);
 	return (get_fractol_count(re, im, c.re, c.im));
 }
 

@@ -6,13 +6,13 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 12:56:24 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 13:54:57 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:25:43 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	tofloat(const char *str, double *returnfloat, int count, double value)
+void	tofloat(const char *str, double *returnfloat, double value)
 {
 	double	sign;
 
@@ -35,8 +35,6 @@ void	tofloat(const char *str, double *returnfloat, int count, double value)
 		value = value * 10 + (*str++ - '0');
 	}
 	value *= sign;
-	while (count--)
-		value /= 10.0;
 	*returnfloat = (float)value;
 }
 
@@ -48,7 +46,7 @@ float	ft_atof(const char *str)
 	double		result;
 
 	i = 0;
-	count = 0;
+	count = 1;
 	decimalptfound = 0;
 	while (str[i])
 	{
@@ -57,10 +55,10 @@ float	ft_atof(const char *str)
 		else if (decimalptfound == 1 && str[i] == '.')
 			return (0);
 		else if (decimalptfound == 1 && ft_isdigit(str[i]))
-			count++;
+			count *= 10;
 		i++;
 	}
 	result = 0;
-	tofloat(str, &result, count, 0);
-	return (result);
+	tofloat(str, &result, 0);
+	return (result / count);
 }

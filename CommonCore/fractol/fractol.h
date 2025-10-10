@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 15:49:40 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/10 16:15:37 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int		main(int argc, char **argv);
 int		ft_close(t_data *data);
 int		determinefractol(int argc, char **argv, t_data *data);
 int		cleanup(t_data *data);
+void	instructions(void);
 
 //render.c
 void	color_pixel(t_img *img, double x, double y, int color);
