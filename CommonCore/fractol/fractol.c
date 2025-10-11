@@ -6,27 +6,27 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:21 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 16:23:00 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/11 18:24:35 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-int	alldigit(char *str)
-{
-	int	i;
+// int	alldigit(char *str)
+// {
+// 	int	i;
 
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]) || (str[i] == '.' && str[i + 1]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
+// 	i = 0;
+// 	if (str[i] == '-' || str[i] == '+')
+// 		i++;
+// 	while (str[i])
+// 	{
+// 		if (!ft_isdigit(str[i]) || (str[i] == '.' && str[i + 1]))
+// 			return (0);
+// 		i++;
+// 	}
+// 	return (1);
+// }
 
 // mandelbrot / julia equation
 // z_n+1 	= z^2_n + c
@@ -47,12 +47,12 @@ int	mandelbrot_count(double re, double im)
 
 int	julia_count(double re, double im, t_data *data)
 {
-	t_z	c;
+	return (get_fractol_count(re, im, data->f.z.re, data->f.z.im));
+}
 
-	c.re = data->f.z.re;
-	c.im = data->f.z.im;
-	printf("c.re is %f and c.im is %f\n", c.re, c.im);
-	return (get_fractol_count(re, im, c.re, c.im));
+int	burningship_count(double re, double im)
+{
+	return (get_fractol_count_burningship(0, 0, re, im));
 }
 
 int	get_fractol_count(double zx, double zy, double cx, double cy)
@@ -73,11 +73,28 @@ int	get_fractol_count(double zx, double zy, double cx, double cy)
 	return (count);
 }
 
-int	count_to_color(int count, int color_shift, int mx_iter)
+int	get_fractol_count_burningship(double zx, double zy, double cx, double cy)
 {
-	if (count >= MAX_ITERATIONS || count >= mx_iter)
-		return (0x000000);
-	return ((count * 0x123456 + color_shift) % 0xFFFFFF);
+	int		count;
+	double	tmp_x;
+	double	tmp_y;
+	double	tempvalx;
+	double	tempvaly;
+
+	count = 0;
+	while (zx * zx + zy * zy <= 4 && count < MAX_ITERATIONS)
+	{
+		tempvalx = fabs(zx);
+		zx = tempvalx;
+		tempvaly = -fabs(zy);
+		zy = tempvaly;
+		tmp_x = zx * zx - zy * zy + cx;
+		tmp_y = 2 * zx * zy + cy;
+		zx = tmp_x;
+		zy = tmp_y;
+		count++;
+	}
+	return (count);
 }
 // julia
 // z_n+1 = z^2_n + c

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:30:00 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 15:49:01 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/11 18:01:07 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	defaultcamera(t_data *data)
 {
 	if (ft_strncmp(data->f.name, "Mandelbrot", 10) == 0)
 	{
-		data->cam.re_min = -2.0;
-		data->cam.re_max = 2.0;
-		data->cam.im_min = -1.5;
-		data->cam.im_max = 1.5;
+		data->cam.re_min = -2.5;
+		data->cam.re_max = 1.0;
+		data->cam.im_min = -1.2;
+		data->cam.im_max = 1.2;
 	}
 	if (ft_strncmp(data->f.name, "Julia", 5) == 0)
 	{
@@ -34,6 +34,13 @@ void	defaultcamera(t_data *data)
 		data->cam.re_max = 2.0;
 		data->cam.im_min = -1.5;
 		data->cam.im_max = 1.5;
+	}
+	if (ft_strncmp(data->f.name, "BurningShip", 11) == 0)
+	{
+		data->cam.re_min = -2.1;
+		data->cam.re_max = 1.3;
+		data->cam.im_min = -2.0;
+		data->cam.im_max = 2.2;
 	}
 	data->cam.c_shift = 1;
 	data->cam.mx_iter = MAX_ITERATIONS;

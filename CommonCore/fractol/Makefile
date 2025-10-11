@@ -5,7 +5,7 @@ SOURCES = 	main.c\
 			fractol.c\
 			window.c\
 			render.c\
-			panzoomcolor.c
+			panzoomcolor.c\
 
 #objects
 OBJECTS = $(SOURCES:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 21:48:05 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 14:32:55 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/11 17:58:54 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	pan(t_data *data, double re_shift, double im_shift)
 
 void	colorshift(t_data *data)
 {
-	data->cam.c_shift += COLORJUMP;
-	data->cam.c_shift %= 0xFFFFFF;
+	data->cam.c_shift += 1;
+	data->cam.c_shift %= 12;
 	return ;
 }

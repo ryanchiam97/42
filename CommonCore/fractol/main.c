@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:50:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 16:32:12 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/11 17:03:05 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	instructions(void)
 	ft_printf("*Accepted Inputs:                                  *\n");
 	ft_printf("*        ./fractol Mandelbrot                      *\n");
 	ft_printf("* OR     ./fractol Julia X Y                       *\n");
-	ft_printf("* OR     ./BurningShip                             *\n");
+	ft_printf("* OR     ./fractol BurningShip                     *\n");
 	ft_printf("****************************************************\n");
 	// need to make burning ship
 	//	=> Add the flags for 
@@ -27,22 +27,27 @@ void	instructions(void)
 
 int	determinefractol(int argc, char **argv, t_data *data)
 {
-	int	error;
+	int	err;
 
-	error = 0;
+	err = 0;
 	if (argc < 2)
-		error = 1;
-	if (error == 0 && ft_strncmp(argv[1], "Mandelbrot", 10) == 0 && argc == 2)
-		data->f.name = argv[1];
-	else if (error == 0 && ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4)
+		err = 1;
+	if (err == 0)
 	{
-		data->f.name = argv[1];
-		data->f.z.re = ft_atoi(argv[2]);
-		data->f.z.im = ft_atoi(argv[3]);
+		if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0 && argc == 2)
+			data->f.name = argv[1];
+		else if (ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4)
+		{
+			data->f.name = argv[1];
+			data->f.z.re = ft_atof(argv[2]);
+			data->f.z.im = ft_atof(argv[3]);
+		}
+		else if (ft_strncmp(argv[1], "BurningShip", 10) == 0 && argc == 2)
+			data->f.name = argv[1];
+		else
+			err = 1;
 	}
-	else
-		error = 1;
-	if (error == 1)
+	if (err == 1)
 		return (instructions(), 0);
 	return (1);
 }

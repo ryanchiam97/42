@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 16:32:26 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/11 18:24:40 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define MAX_ITERATIONS 100
-# define COLORJUMP 777777
+# define COLORJUMP 64
 # define PANSPEED 0.05
 
 typedef struct s_img
@@ -68,6 +68,13 @@ typedef struct s_data
 	t_fractol	f;
 }	t_data;
 
+typedef struct s_rgbdouble
+{
+	double	r;
+	double	g;
+	double	b;
+}	t_rgbdouble;
+
 //main.c
 int		main(int argc, char **argv);
 int		ft_close(t_data *data);
@@ -80,17 +87,19 @@ void	color_pixel(t_img *img, double x, double y, int color);
 void	render(t_data *data);
 double	map_x(t_data *data, int x);
 double	map_y(t_data *data, int y);
+int		count_to_color(int count, int color_shift, int mx_iter);
 //window.c
 void	init_image(t_data *data);
 void	defaultcamera(t_data *data);
 int		ft_keypress(int keycode, t_data *data);
 int		ft_mousehook(int button, int x, int y, t_data *data);
 //fractol.c
-int		alldigit(char *str);
 int		mandelbrot_count(double re, double im);
 int		julia_count(double re, double im, t_data *data);
+int		burningship_count(double re, double im);
 int		get_fractol_count(double zx, double zy, double cx, double cy);
-int		count_to_color(int count, int color_shift, int mx_iter);
+int		get_fractol_count_burningship(double zx, double zy, double cx,
+			double cy);
 //panzoom.c
 void	zoom(t_data *data, int mouse_x, int mouse_y, double zoom);
 void	pan(t_data *data, double re_shift, double im_shift);

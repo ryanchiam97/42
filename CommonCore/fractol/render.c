@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:36:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/10 15:49:01 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/11 18:16:30 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	render(t_data *data)
 				count = mandelbrot_count(map_x(data, x), map_y(data, y));
 			else if (ft_strncmp("Julia", data->f.name, 5) == 0)
 				count = julia_count(map_x(data, x), map_y(data, y), data);
+			else if (ft_strncmp("BurningShip", data->f.name, 12) == 0)
+				count = mandelbrot_count(map_x(data, x), map_y(data, y));
 			color = count_to_color(count, data->cam.c_shift, data->cam.mx_iter);
 			color_pixel(&data->img, x, y, color);
 			x++;
@@ -65,4 +67,11 @@ double	map_y(t_data *data, int y)
 	min = data->cam.im_min;
 	max = data->cam.im_max;
 	return (max - y * (max - min) / (double)(HEIGHT));
+}
+
+int	count_to_color(int count, int color_shift, int mx_iter)
+{
+	if (count >= MAX_ITERATIONS || count >= mx_iter)
+		return (0x000000);
+	return ((count * 0x123456 + color_shift) % 0xFFFFFF);
 }
