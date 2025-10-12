@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/12 15:56:50 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 16:23:50 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define MAX_ITERATIONS 50
+# define MAX_ITERATIONS 100
 
-// # define MAX_ITERATIONS 100
+// # define MAX_ITERATIONS 50
 
 # define COLORJUMP 80
+# define COLORMOD 12
 # define PANSPEED 0.05
 
-// # define R 100.0
+// # define R 5.0
 // # define G 1500.0
 // # define B 28.5
 

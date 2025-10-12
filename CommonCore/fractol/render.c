@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:36:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/12 15:46:09 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 16:21:05 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	count_to_color(int count, int color_shift, int mx_iter)
 	r = (int)((R) * (1 - t) * t * t * t * 255);
 	g = (int)((G) * (1 - t) * (1 - t) * t * t * 255);
 	b = (int)((B) * (1 - t) * (1 - t) * (1 - t) * t * 255);
-	color_shift %= 6;
+	color_shift %= 4;
 	if (color_shift == 0)
 		return ((r << 16) | (g << 8) | b);
 	else if (color_shift == 1)
