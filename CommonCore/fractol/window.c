@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:30:00 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/12 15:05:11 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:51:54 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	instructions(void)
 	ft_printf("****************************************************\n");
 	ft_printf("*Accepted Inputs:                                  *\n");
 	ft_printf("*        ./fractol Mandelbrot                      *\n");
-	ft_printf("* OR     ./fractol Julia X Y                       *\n");
+	ft_printf("* OR     ./fractol Julia X.f Y.f                   *\n");
 	ft_printf("* OR     ./fractol BurningShip                     *\n");
 	ft_printf("****************************************************\n");
 }

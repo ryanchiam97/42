@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:36:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/12 14:55:46 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:46:09 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,28 @@ double	map_y(t_data *data, int y)
 
 int	count_to_color(int count, int color_shift, int mx_iter)
 {
+	double	t;
+	int		r;
+	int		g;
+	int		b;
+
 	if (count >= MAX_ITERATIONS || count >= mx_iter)
 		return (0x000000);
-	return ((count * 0x123456 * (color_shift - 1)) % 0xFFFFFF);
+	t = (double) count / mx_iter;
+	r = (int)((R) * (1 - t) * t * t * t * 255);
+	g = (int)((G) * (1 - t) * (1 - t) * t * t * 255);
+	b = (int)((B) * (1 - t) * (1 - t) * (1 - t) * t * 255);
+	color_shift %= 6;
+	if (color_shift == 0)
+		return ((r << 16) | (g << 8) | b);
+	else if (color_shift == 1)
+		return ((r << 16) | (b << 8) | g);
+	else if (color_shift == 2)
+		return ((g << 16) | (r << 8) | b);
+	else if (color_shift == 3)
+		return ((g << 16) | (b << 8) | r);
+	else if (color_shift == 4)
+		return ((b << 16) | (r << 8) | g);
+	else
+		return ((b << 16) | (g << 8) | r);
 }

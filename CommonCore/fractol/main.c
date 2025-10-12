@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:50:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/12 15:12:57 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:19:14 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	handlejulia(t_data *data, char *name, char *str1, char *str2)
 	return (1);
 }
 
-int determinefractol(int argc, char **argv, t_data *data)
+int	determinefractol(int argc, char **argv, t_data *data)
 {
 	int	err;
 
@@ -38,11 +38,10 @@ int determinefractol(int argc, char **argv, t_data *data)
 	{
 		if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0 && argc == 2)
 			data->f.name = argv[1];
-		else if (ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4) 
+		else if (ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4)
 		{
 			if (!handlejulia(data, argv[1], argv[2], argv[3]))
 				err = 1;
-			printf("re is %f, im is %f\n", data->f.z.re, data->f.z.im);
 		}
 		else if (ft_strncmp(argv[1], "BurningShip", 10) == 0 && argc == 2)
 			data->f.name = argv[1];

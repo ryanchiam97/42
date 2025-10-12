@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/12 15:15:11 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:56:50 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,20 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define MAX_ITERATIONS 100
-# define COLORJUMP 7
+# define MAX_ITERATIONS 50
+
+// # define MAX_ITERATIONS 100
+
+# define COLORJUMP 80
 # define PANSPEED 0.05
+
+// # define R 100.0
+// # define G 1500.0
+// # define B 28.5
+
+# define R 9.0
+# define G 15.0
+# define B 8.5
 
 typedef struct s_img
 {
@@ -67,13 +78,6 @@ typedef struct s_data
 	t_camera	cam;
 	t_fractol	f;
 }	t_data;
-
-typedef struct s_rgbdouble
-{
-	double	r;
-	double	g;
-	double	b;
-}	t_rgbdouble;
 
 //main.c
 int		main(int argc, char **argv);
