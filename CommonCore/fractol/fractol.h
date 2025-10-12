@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/11 18:24:40 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:15:11 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define WIDTH 800
 # define HEIGHT 600
 # define MAX_ITERATIONS 100
-# define COLORJUMP 64
+# define COLORJUMP 7
 # define PANSPEED 0.05
 
 typedef struct s_img
@@ -80,8 +80,7 @@ int		main(int argc, char **argv);
 int		ft_close(t_data *data);
 int		determinefractol(int argc, char **argv, t_data *data);
 int		cleanup(t_data *data);
-void	instructions(void);
-
+int		handlejulia(t_data *data, char *name, char *str1, char *str2);
 //render.c
 void	color_pixel(t_img *img, double x, double y, int color);
 void	render(t_data *data);
@@ -93,6 +92,7 @@ void	init_image(t_data *data);
 void	defaultcamera(t_data *data);
 int		ft_keypress(int keycode, t_data *data);
 int		ft_mousehook(int button, int x, int y, t_data *data);
+void	instructions(void);
 //fractol.c
 int		mandelbrot_count(double re, double im);
 int		julia_count(double re, double im, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:24:56 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/11 15:25:21 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:02:54 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-float				ft_atof(const char *str);
+float				ft_atof(const char *str, int *resultvalidity);
 long long			ft_atoi(const char *str);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t nmemb, size_t size);

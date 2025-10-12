@@ -6,26 +6,28 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:50:44 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/11 17:03:05 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:12:57 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
-void	instructions(void)
+int	handlejulia(t_data *data, char *name, char *str1, char *str2)
 {
-	ft_printf("****************************************************\n");
-	ft_printf("*Accepted Inputs:                                  *\n");
-	ft_printf("*        ./fractol Mandelbrot                      *\n");
-	ft_printf("* OR     ./fractol Julia X Y                       *\n");
-	ft_printf("* OR     ./fractol BurningShip                     *\n");
-	ft_printf("****************************************************\n");
-	// need to make burning ship
-	//	=> Add the flags for 
-	// need to fix the atof in the libft
+	int	valid;
+
+	valid = 0;
+	data->f.name = name;
+	data->f.z.re = ft_atof(str1, &valid);
+	if (valid == 0)
+		return (0);
+	data->f.z.im = ft_atof(str2, &valid);
+	if (valid == 0)
+		return (0);
+	return (1);
 }
 
-int	determinefractol(int argc, char **argv, t_data *data)
+int determinefractol(int argc, char **argv, t_data *data)
 {
 	int	err;
 
@@ -36,11 +38,11 @@ int	determinefractol(int argc, char **argv, t_data *data)
 	{
 		if (ft_strncmp(argv[1], "Mandelbrot", 10) == 0 && argc == 2)
 			data->f.name = argv[1];
-		else if (ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4)
+		else if (ft_strncmp(argv[1], "Julia", 5) == 0 && argc == 4) 
 		{
-			data->f.name = argv[1];
-			data->f.z.re = ft_atof(argv[2]);
-			data->f.z.im = ft_atof(argv[3]);
+			if (!handlejulia(data, argv[1], argv[2], argv[3]))
+				err = 1;
+			printf("re is %f, im is %f\n", data->f.z.re, data->f.z.im);
 		}
 		else if (ft_strncmp(argv[1], "BurningShip", 10) == 0 && argc == 2)
 			data->f.name = argv[1];

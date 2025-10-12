@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:21 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/11 18:24:35 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 14:07:01 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,12 @@ int	get_fractol_count_burningship(double zx, double zy, double cx, double cy)
 	int		count;
 	double	tmp_x;
 	double	tmp_y;
-	double	tempvalx;
-	double	tempvaly;
 
 	count = 0;
 	while (zx * zx + zy * zy <= 4 && count < MAX_ITERATIONS)
 	{
-		tempvalx = fabs(zx);
-		zx = tempvalx;
-		tempvaly = -fabs(zy);
-		zy = tempvaly;
+		zx = fabs(zx);
+		zy = -fabs(zy);
 		tmp_x = zx * zx - zy * zy + cx;
 		tmp_y = 2 * zx * zy + cy;
 		zx = tmp_x;

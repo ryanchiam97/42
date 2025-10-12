@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/30 21:30:00 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/11 18:01:07 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/12 15:05:11 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	defaultcamera(t_data *data)
 		data->cam.im_min = -1.5;
 		data->cam.im_max = 1.5;
 	}
-	if (ft_strncmp(data->f.name, "BurningShip", 11) == 0)
+	if (ft_strncmp(data->f.name, "BurningShip", 12) == 0)
 	{
 		data->cam.re_min = -2.1;
 		data->cam.re_max = 1.3;
 		data->cam.im_min = -2.0;
 		data->cam.im_max = 2.2;
 	}
-	data->cam.c_shift = 1;
+	data->cam.c_shift = COLORJUMP;
 	data->cam.mx_iter = MAX_ITERATIONS;
 }
 
@@ -77,4 +77,14 @@ int	ft_mousehook(int button, int x, int y, t_data *data)
 		zoom(data, x, y, 0.9);
 	render(data);
 	return (0);
+}
+
+void	instructions(void)
+{
+	ft_printf("****************************************************\n");
+	ft_printf("*Accepted Inputs:                                  *\n");
+	ft_printf("*        ./fractol Mandelbrot                      *\n");
+	ft_printf("* OR     ./fractol Julia X Y                       *\n");
+	ft_printf("* OR     ./fractol BurningShip                     *\n");
+	ft_printf("****************************************************\n");
 }
