@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/20 17:43:08 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/12 16:23:50 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/13 23:16:06 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@
 
 // # define MAX_ITERATIONS 50
 
-# define COLORJUMP 80
+# define COLORJUMP 3
 # define COLORMOD 12
 # define PANSPEED 0.05
 
-// # define R 5.0
-// # define G 1500.0
-// # define B 28.5
+# define R 5.0
+# define G 1500.0
+# define B 28.5
 
-# define R 9.0
-# define G 15.0
-# define B 8.5
+// # define R 9.0
+// # define G 15.0
+// # define B 8.5
 
 typedef struct s_img
 {
