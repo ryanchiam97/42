@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   myputstr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 00:14:42 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/17 00:14:14 by rchiam           ###   ########.fr       */
+/*   Created: 2025/06/14 14:41:07 by rchiam            #+#    #+#             */
+/*   Updated: 2025/06/14 15:21:48 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "ft_printf.h"
 
-int send(__pid_t server_pid, unsigned char c)
-
-int main(int argc, char **argv)
+int	myftputstr(char *s)
 {
-	__pid_t	server_pid;
-	int		i;
-	struct	sigaction;
+	int	i;
+	int	count;
 
-	server_pid = ft_atoi(argv[1]);
 	i = 0;
-	while (i < ft_strlen(argv[2]))
+	count = 0;
+	if (!s)
+		return (write(1, "(null)", 6), 6);
+	while (s[i])
 	{
-		//
+		write(1, &(s[i]), 1);
+		count++;
 		i++;
 	}
-	
+	return (count);
 }

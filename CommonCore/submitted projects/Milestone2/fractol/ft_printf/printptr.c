@@ -1,31 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   printptr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 00:14:42 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/17 00:14:14 by rchiam           ###   ########.fr       */
+/*   Created: 2025/06/14 18:07:14 by rchiam            #+#    #+#             */
+/*   Updated: 2025/06/14 18:23:16 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "ft_printf.h"
 
-int send(__pid_t server_pid, unsigned char c)
-
-int main(int argc, char **argv)
+int	printptr(unsigned long p, int caps, int count)
 {
-	__pid_t	server_pid;
-	int		i;
-	struct	sigaction;
+	char			*ref;
+	char			c;
 
-	server_pid = ft_atoi(argv[1]);
-	i = 0;
-	while (i < ft_strlen(argv[2]))
+	if (caps == -1)
 	{
-		//
-		i++;
+		write(1, "0x", 2);
+		caps = 10;
 	}
-	
+	if (caps == 1)
+		ref = "0123456789ABCDEF";
+	else
+		ref = "0123456789abcdef";
+	if (p >= 16)
+	{
+		count = printptr(p / 16, caps, count);
+	}
+	c = ref[p % 16];
+	write(1, &c, 1);
+	count += 1;
+	return (count);
 }

@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   printnbr.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/14 00:14:42 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/17 00:14:14 by rchiam           ###   ########.fr       */
+/*   Created: 2025/06/14 14:40:11 by rchiam            #+#    #+#             */
+/*   Updated: 2025/06/14 15:21:59 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "ft_printf.h"
 
-int send(__pid_t server_pid, unsigned char c)
-
-int main(int argc, char **argv)
+int	printnbr(int n, int i_unsigned, int count)
 {
-	__pid_t	server_pid;
-	int		i;
-	struct	sigaction;
+	char	c;
 
-	server_pid = ft_atoi(argv[1]);
-	i = 0;
-	while (i < ft_strlen(argv[2]))
+	if (i_unsigned == 0)
 	{
-		//
-		i++;
+		if (n == -2147483648)
+			return (write(1, "-2147483648", 11), 11);
+		if (n < 0)
+		{
+			write(1, "-", 1);
+			n = -n;
+			count++;
+		}
 	}
-	
+	else
+		n = (unsigned int)n;
+	if (n >= 10)
+		count = printnbr((n / 10), i_unsigned, count);
+	c = (n % 10) + '0';
+	write(1, &c, 1);
+	count += 1;
+	return (count);
 }
