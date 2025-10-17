@@ -6,49 +6,52 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 00:14:50 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/16 23:23:37 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/17 16:37:46 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-#include <bits/types/__sigset_t.h>
+
+void	handlebits(int sig, siginfo_t *info, void *context)
+{
+	static unsigned char	c = 0;
+	static int				bitcount = 0;
+	static int				client_pid = 0;
+
+	(void)context;
+	if (client_pid == 0)
+		client_pid = info->si_pid;
+	c = (c << 1) | (sig == SIGUSR2);
+	bitcount++;
+	if (bitcount == 8)
+	{
+		if (c == '\0')
+		{
+			ft_printf("\nmessage from client%i complete!\n", client_pid);
+			kill(info->si_pid, SIGUSR1);
+			kill(info->si_pid, SIGUSR2);
+			client_pid = 0;
+		}
+		else
+			ft_printf("%c", c);
+		c = 0;
+		bitcount = 0;
+	}
+	kill(info->si_pid, SIGUSR1);
+}
 
 int	main(void)
 {
-	__pid_t	__current_pid;
+	pid_t				current_pid;
+	struct sigaction	sa;
 
-	__current_pid = getpid();
-	ft_printf("%d\n", __current_pid);
+	sa.sa_sigaction = handlebits;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_SIGINFO;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	current_pid = getpid();
+	ft_printf("%d\n", current_pid);
+	while (1)
+		pause();
 }
-
-// to do:
-/*
-1. server: print PID
-2. client: take in PID and message
-3. client: kill() to send signals bit by bit according to message
-4. server to send ack to client(s) each bit (client unblock upon recieving), print at end msg and send end
-5. client cleanup and end
-*/
-
-int				kill(__pid_t pid, int sig);
-
-__sighandler_t	signal(int signum, __sighandler_t handler);
-
-int				sigemptyset(__sigset_t *set);
-
-int				sigaddset(__sigset_t *set, int sigsum);
-
-int				sigaction(int signum, const struct sigaction *act,
-					struct sigaction *oldact);
-
-int				getpid(void);
-
-int				pause(void);
-
-unsigned int	sleep(unsigned int seconds);
-
-int				usleep(useconds_t, usec);
-
-void			exit(int status);
-
-

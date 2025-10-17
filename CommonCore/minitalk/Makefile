@@ -1,37 +1,50 @@
 NAME_SERVER = server
 NAME_CLIENT = client
 
-SOURCES = 	server.c\
-			client.c\
+SOURCES_SERVER = server.c
+SOURCES_CLIENT = client.c
 
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS_SERVER = $(SOURCES_SERVER:.c=.o)
+OBJECTS_CLIENT = $(SOURCES_CLIENT:.c=.o)
 
 CC = cc
 CFLAGS = -Wextra -Wall -Werror
-MAKE = MAKE
 
 FTPRINTF_DIR = ./ft_printf
 FTPRINTF_LIB = ftprintf.a
 FTPRINTF_FLAGS = -lftprintf
+FTPRINTF_PATH = $(FTPRINTF_DIR)/$(FTPRINTF_LIB)
+
+LIBFT_DIR = ./libft
+LIBFT_LIB = libft.a
+LIBFT_FLAGS = -lft
 
 all : $(NAME_SERVER) $(NAME_CLIENT)
 
-$(NAME): $(OBJECTS) $(FTPRINTF_DIR) / $(FT_PRINTF_DIR)
-	$(CC) $(CFLAGS) $(OBJECTS) -o$(NAME) -L$(FT_PRINTF_DIR) $(FTPRINTF_FLAGS)
+$(NAME_SERVER): $(OBJECTS_SERVER) $(FTPRINTF_PATH) $(LIBFT_DIR)/$(LIBFT_LIB)
+	$(CC) $(CFLAGS) $(OBJECTS_SERVER) -L$(FTPRINTF_DIR) -L$(LIBFT_DIR) $(LIBFT_FLAGS) $(FTPRINTF_FLAGS) -o $(NAME_SERVER)
+
+$(NAME_CLIENT): $(OBJECTS_CLIENT) $(FTPRINTF_PATH) $(LIBFT_DIR)/$(LIBFT_LIB)
+	$(CC) $(CFLAGS) $(OBJECTS_CLIENT) -L$(FTPRINTF_DIR) -L$(LIBFT_DIR) $(LIBFT_FLAGS) $(FTPRINTF_FLAGS) -o $(NAME_CLIENT)
 
 %.o: %.c
-	$(CC) $(CLAGS) -I$(FT_PRINT_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I$(FTPRINTF_DIR) -c $< -o $@
 
-$(FTPRINTF_DIR)/$(FTPRINTF_LIB):
+$(LIBFT_DIR)/$(LIBFT_LIB):
+	@$(MAKE) -C $(LIBFT_DIR)
+
+$(FTPRINTF_PATH):
 	@$(MAKE) -C $(FTPRINTF_DIR)
 
 clean: 
+	@$(MAKE) -C $(LIBFT_DIR) clean
 	@$(MAKE) -C $(FTPRINTF_DIR) clean
-	rm -f $(OBJECTS)
+	rm -f $(OBJECTS_SERVER) $(OBJECTS_CLIENT)
 
 fclean: clean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@$(MAKE) -C $(FTPRINTF_DIR) fclean
-	rm -f $(NAME)
+	rm -f $(NAME_SERVER) $(NAME_CLIENT)
 
 re: fclean all
 
