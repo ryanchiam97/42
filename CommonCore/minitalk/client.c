@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 00:14:42 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/18 18:04:11 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/18 19:44:29 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,9 @@ int	main(int argc, char **argv)
 	char	*message;
 	int		i;
 
-	server_pid = ft_atoi(argv[1]);
-	if (setup() != 1 || argc != 3 || ft_strlen(argv[2]) == 0
-		|| server_pid == getpid())
+	if (setup() != 1 || argc != 3 || ft_strlen(argv[2]) == 0)
 		return (write(1, "\nExpected: ./client {serverPID} {message}\n", 41));
+	server_pid = ft_atoi(argv[1]);
 	message = argv[2];
 	i = 0;
 	while (1)
