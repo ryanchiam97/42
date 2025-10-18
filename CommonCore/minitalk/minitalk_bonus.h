@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   minitalk_bonus.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 00:15:50 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/18 17:50:28 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/18 17:57:17 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,4 @@ void	sendchar(pid_t server_pid, unsigned char c);
 void	handlebits(int sig, siginfo_t *info, void *context);
 void	endofmessage(pid_t s, int *client_pid, int *bitcount, unsigned char *c);
 void	clearbitcountandc(int *bitcount, unsigned char *c);
-
 #endif
