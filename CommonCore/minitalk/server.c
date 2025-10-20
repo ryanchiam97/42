@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 00:14:50 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/18 18:02:41 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/20 19:44:13 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	clearbitcountandc(int *bitcount, unsigned char *c)
 void	endofmessage(pid_t s, int *client_pid, int *bitcount, unsigned char *c)
 {
 	kill(s, SIGUSR1);
+	usleep(800);
 	kill(s, SIGUSR2);
 	ft_printf("\nmessage from client %i complete!\n", *client_pid);
 	*client_pid = 0;
@@ -51,7 +52,8 @@ void	handlebits(int sig, siginfo_t *info, void *context)
 			write(1, &c, 1);
 		clearbitcountandc(&bitcount, &c);
 	}
-	kill(info->si_pid, SIGUSR1);
+	if (client_pid)
+		kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)

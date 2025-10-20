@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 00:14:42 by rchiam            #+#    #+#             */
-/*   Updated: 2025/10/18 19:44:29 by rchiam           ###   ########.fr       */
+/*   Updated: 2025/10/20 19:19:59 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,18 @@ void	sendchar(pid_t server_pid, unsigned char c)
 			kill(server_pid, SIGUSR2);
 		else
 			kill(server_pid, SIGUSR1);
-		usleep(500);
+		usleep(800);
 	}
-	while (g_ack != 1)
+	while (g_ack == 0)
 		pause();
 }
 
 void	signalhandler(int sig)
 {
-	if (sig == SIGUSR1)
+	if (sig == SIGUSR1 && g_ack != 2)
 		g_ack = 1;
 	else if (sig == SIGUSR2)
-	{
 		g_ack = 2;
-		ft_printf("\nRecieved SIGUSR2 ack signal\n");
-	}
 }
 
 int	setup(void)
@@ -57,12 +54,12 @@ int	setup(void)
 
 int	main(int argc, char **argv)
 {
-	pid_t	server_pid;
-	char	*message;
-	int		i;
+	pid_t		server_pid;
+	char		*message;
+	int			i;
 
 	if (setup() != 1 || argc != 3 || ft_strlen(argv[2]) == 0)
-		return (write(1, "\nExpected: ./client {serverPID} {message}\n", 41));
+		return (write(1, "\nExpected:./client {toPID}{nonemptymessage}\n", 43));
 	server_pid = ft_atoi(argv[1]);
 	message = argv[2];
 	i = 0;
@@ -73,12 +70,8 @@ int	main(int argc, char **argv)
 			break ;
 		i++;
 	}
-	usleep(5000);
-	while (1)
-	{
-		if (g_ack != 2)
-			break ;
+	while (g_ack != 2)
 		pause();
-	}
+	ft_printf("\nRecieved SIGUSR2 ack signal from server... Exiting\n");
 	exit (0);
 }
