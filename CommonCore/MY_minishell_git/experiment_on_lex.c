@@ -296,6 +296,7 @@ t_tokenlinkedlist	*parsecmdline(char *cmdline)
 			add_token(&list, new_token(val, bracket_depth, quotes, getlast(&list)));
 		}
 		else
+		{
 			// word loop
 			int	expandlater;
 
@@ -320,6 +321,7 @@ t_tokenlinkedlist	*parsecmdline(char *cmdline)
 			}
 			else
 				getlast(&list)->expand_$_later = 0;
+		}
 	}
 	if (bracket_depth != 0)
 	{
@@ -398,7 +400,7 @@ typedef struct s_ast_tree
 // return
 // look for and pick subshell and equal depth range
 // rm brackets, current depth
-	-1 . only 1 child form_tree(rest of stuff goes here to this child).
+//	-1 . only 1 child form_tree(rest of stuff goes here to this child).
 
 // run tree...
 // L, R, H using dfs... return head
