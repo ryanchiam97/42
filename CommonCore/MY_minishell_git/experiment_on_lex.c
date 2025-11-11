@@ -52,8 +52,6 @@ e_tokentype	assigntokentype(char *word)
 			return (T_R_IN);
 		else if (word[0] == '>')
 			return (T_R_OUT);
-		else if (word[0] == '\t' || word[0] == ' ')
-			return (T_SPACE);
 		else if (word[0] == '(')
 			return (T_LB);
 		else if (word[0] == ')')
@@ -72,7 +70,7 @@ int	expandlatercheck(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] = '$')
+		if (input[i] == '$')
 			return (1);
 		i++;
 	}
@@ -82,15 +80,18 @@ int	expandlatercheck(char *input)
 t_tokenlinkedlist	*new_token(char *value, int bracketdepth, int quotetype,
 		t_tokenlinkedlist *prev)
 {
-	t_tokenlinkedlist	newnode;
+	t_tokenlinkedlist	*newnode;
 
-	newnode.type = assigntokentype(value);
-	newnode.bracket_depth = bracketdepth;
-	newnode.expand_$_later = expandlatercheck(value);
-	newnode.previous = prev;
-	newnode.next = NULL;
-	newnode.quotetype = quotetype;
-	return (&newnode);
+	newnode = malloc(sizeof(t_tokenlinkedlist));
+	if (!newnode)
+		return (NULL);
+	newnode->type = assigntokentype(value);
+	newnode->bracket_depth = bracketdepth;
+	newnode->expand_$_later = expandlatercheck(value);
+	newnode->previous = prev;
+	newnode->next = NULL;
+	newnode->quotetype = quotetype;
+	return (newnode);
 }
 t_tokenlinkedlist	*getlast(t_tokenlinkedlist **head)
 {
@@ -121,6 +122,65 @@ void clearlist(t_tokenlinkedlist **list)
 	}
 }
 
+int	h_is_space(char input)
+{
+	if (input == '\t' || input ==' ')
+		return (1);
+	else
+		return (0);
+}
+
+int	h_is_bracket(char input)
+{
+	if (input == '(' || input ==')')
+		return (1);
+	else
+		return (0);
+}
+int	h_is_op(char input)
+{
+	if (input == '|' || input =='<'|| input =='>'|| input =='&')
+		return (1);
+	else
+		return (0);
+}
+int	h_is_quote(char input)
+{
+	if (input == '\'')
+		return (1);
+	else if (input =='\"')
+		return (2);
+	else
+		return (0);
+}
+int	h_appendchar(char **s, char c)
+{
+	size_t	len;
+	char	*temp;
+
+	if (*s == NULL)
+	{
+		*s = malloc(2);
+		if (!*s)
+			return (0);
+		(*s)[0] = c;
+		(*s)[1] = '\0';
+		return (1);
+	}
+	len = ft_strlen(*s);
+	temp = realloc(*s, len + 2);
+	if (!temp)
+	{
+		free(*s);
+		*s = NULL;
+		return (0);
+	}
+	*s = temp;
+	(*s)[len] = c;
+	(*s)[len + 1] = '\0';
+	return (1);
+}
+
 t_tokenlinkedlist	*parsecmdline(char *cmdline)
 {
 	int					i;
@@ -141,7 +201,7 @@ t_tokenlinkedlist	*parsecmdline(char *cmdline)
 	// do malloc check, return if error
 	current = NULL;
 	list = &current;
-	while (cmdline[i] = '\0') // while not end of line
+	while (cmdline[i] != '\0') // while not end of line
 	{
 		quotes = 0;
 		expandlater = 0;
@@ -151,16 +211,8 @@ t_tokenlinkedlist	*parsecmdline(char *cmdline)
 			clearlist(&list);
 			return NULL;
 		}
-		if (cmdline[i] == 34)// double quotes
-		{
-			quotes = 2;
-			i++;
-		}
-		else if (cmdline[i] == 39) // single quotes
-		{
-			quotes = 1;
-			i++;
-		}
+		quotes = h_is_quote(cmdline[i]);
+		i += quotes;
 		if (cmdline[i] == '(') // handle opening brackets
 		{
 			add_token(&list, new_token(cmdline[i], bracket_depth, quotes, getlast(&list)));
@@ -245,11 +297,29 @@ t_tokenlinkedlist	*parsecmdline(char *cmdline)
 		}
 		else
 			// word loop
-			while (cmdline[i] !=)
+			int	expandlater;
+
+			while (cmdline[i] != '\0') // while cmdline[i] is not a space, operator, quote, 
 			{
-				//extract word function: to do... reference handling of quote mode earlier
-				//
+				if (cmdline[i] == ' ' || cmdline[i] == '\t'|| cmdline[i] == '<'|| cmdline[i] == '>'|| cmdline[i] == '|'
+					|| cmdline[i] == '&' || cmdline[i] == '('|| cmdline[i] == ')'|| cmdline[i] == '\''|| cmdline[i] == '\"')
+					break;
+	
+				char *tmp;
+				tmp = cmdline[i];
+				val = h_appendchar(&tmp, cmdline[i]);
+				if (cmdline[i] == '$')
+					expandlater = 1;
+				i++;
 			}
+			add_token(&list, new_token(val, bracket_depth, quotes, getlast(&list)));
+			if (expandlater == 1)
+			{
+				expandlater = 0;
+				getlast(&list)->expand_$_later = 1;
+			}
+			else
+				getlast(&list)->expand_$_later = 0;
 	}
 	if (bracket_depth != 0)
 	{
@@ -258,6 +328,7 @@ t_tokenlinkedlist	*parsecmdline(char *cmdline)
 		return NULL;
 	}
 	// add eof token to end of linked list
+	add_token(&list, new_token(val, bracket_depth, quotes, getlast(&list)));
 	// return linked list head
 }
 
