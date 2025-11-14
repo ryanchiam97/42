@@ -70,7 +70,7 @@ int	expandlatercheck(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '$')
+		if (input[i] == '$' || input[i] == '*')
 			return (1);
 		i++;
 	}
@@ -100,11 +100,16 @@ t_tokenlinkedlist	*getlast(t_tokenlinkedlist **head)
 	return (*head);
 }
 
+t_tokenlinkedlist	*getfirst(t_tokenlinkedlist **head)
+{
+	while ((*head)->previous != NULL)
+		(*head) = (*head)->previous;
+	return (*head);
+}
+
 void	add_token(t_tokenlinkedlist **head, t_tokenlinkedlist *new)
 {
-	while ((*head)->next != NULL)
-		(*head) = (*head)->next;
-	(*head)->next = new;
+	getlast(head)->next = new;
 	new->previous = (*head);
 }
 
@@ -180,6 +185,99 @@ int	h_appendchar(char **s, char c)
 	(*s)[len + 1] = '\0';
 	return (1);
 }
+int	p_handle_quote_token(char **cmdline, int i, int bracket, t_tokenlinkedlist *last)
+{
+	char				*word;
+	int					quote;
+	int					count;
+	char				*value;
+	int					i;
+
+	count = 0;
+	quote = h_is_quote((*cmdline)[0]);
+	while ((*cmdline)[count] != '\0' || quote != h_is_quote((*cmdline)[count]) || quote != 0)
+	{
+		if (quote == h_is_quote((*cmdline)[count]))
+			quote = 0;
+		else
+			count++;
+	}
+	value = "";
+	i = 0;
+	while (count--)
+		value = h_appendchar(value, (*cmdline)[i++]);
+	if ((*cmdline)[count] == '\0' && quote != 0)
+		return -1;
+	if ((*cmdline)[count] == '\0' && quote == 0)
+		return (add_token(&last, new_token(value, bracket, quote, last)),count - 1);
+}
+
+int	p_handle_bracket(char **cmdline, int	*bracket_depth, t_tokenlinkedlist *last)
+{
+	if ((*cmdline)[0] == '(')
+	{
+		*bracket_depth++;
+		return (add_token(&last, new_token((*cmdline)[0], bracket_depth, 0, last)), 1);
+	}
+	else if ((*cmdline)[0] == ')')
+	{
+		add_token(&last, new_token((*cmdline)[0], bracket_depth, 0, last));
+		bracket_depth--;
+		return (1);
+	}
+}
+int	p_handle_operator(char	**cmdline, int *bracket_depth, t_tokenlinkedlist *last)
+{
+	if ((*cmdline)[1] && ((*cmdline)[0] == (*cmdline)[1]))
+		return (add_token(&last, new_token(h_appendchar(*cmdline, (*cmdline)[1]), bracket_depth, 0, last)), 2);
+	else
+		return (add_token(&last, new_token(*cmdline[0], bracket_depth, 0, last)), 1);
+}
+int	p_handle_space(char	**cmdline, int *bracket_depth, t_tokenlinkedlist *last)
+{
+	return (add_token(&last, new_token(*cmdline[0], bracket_depth, 0, last)), 1);
+}
+int	p_handle_word(char	**cmdline, int *bracket_depth, t_tokenlinkedlist *last)
+{
+	int		i;
+	char	*val;
+
+	i = 0;
+	while ((*cmdline)[i] != '\0' || !h_is_space((*cmdline)[i])|| !h_is_quote((*cmdline)[i])|| !h_is_bracket((*cmdline)[i])|| !h_is_op((*cmdline)[i]))
+		i++;
+	val = malloc(sizeof(char) * i);
+	if (!val)
+		return NULL;
+	ft_strlcpy(val, cmdline, i);
+	add_token(&last, new_token(val, 0, 0, last));
+}
+
+t_tokenlinkedlist	*parsecmdline(char *cmdline)
+{
+	int					i;
+	int					bracket_depth;
+	int					quotes;
+	t_tokenlinkedlist	*list;
+	t_tokenlinkedlist	*
+
+	i = 0;
+	while (cmdline[i] != '/0')
+	{
+		// if in quotes, up the quotes flag... if in quotes and you see a matching quote, exit quote mode
+			//enter word loop... while !hitting quote... just keep adding to word.
+		// else (not in quotes)... if open bracket, increase bracket depth, else decrease it (to have same bracket depth as their match)
+		// else, if operator, handle as operator (single or double)
+		// else if space/ text... start new word
+		// else if word, handle as word (mark if need to expand later for $ or *)
+			// wordloop
+			// while !quoted, !brackets, !op, !space and !EOF... 
+				// just keep increasing j... then when hitting any of these... malloc i to j and tokenize word
+		i++;
+	} 
+}
+
+//===========================================================================================================================================================
+
 
 t_tokenlinkedlist	*parsecmdline(char *cmdline)
 {
@@ -212,7 +310,8 @@ t_tokenlinkedlist	*parsecmdline(char *cmdline)
 			return NULL;
 		}
 		quotes = h_is_quote(cmdline[i]);
-		i += quotes;
+		if (quotes != 0)
+			i ++;
 		if (cmdline[i] == '(') // handle opening brackets
 		{
 			add_token(&list, new_token(cmdline[i], bracket_depth, quotes, getlast(&list)));
