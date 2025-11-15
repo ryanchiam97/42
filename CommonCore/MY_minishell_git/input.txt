@@ -1,0 +1,3 @@
+testing | ("0hi $USER" || ('test' << hihihi && *.out >> hithere < i) > o | u)
+hihinextline
+test'ing'again

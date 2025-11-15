@@ -6,7 +6,7 @@
 #    By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/30 16:00:10 by twtan             #+#    #+#              #
-#    Updated: 2025/11/05 21:36:06 by rchiam           ###   ########.fr        #
+#    Updated: 2025/11/15 14:42:15 by rchiam           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS = minishell.c \
 	minishell_builtin_echo.c \
 	minishell_builtin_exit.c \
 	minishell_builtin_pwd.c	\
+	minishell_builtin_cd.c	\
 	minishell_cmdline_handler.c
 
 # Source files - Bonus
