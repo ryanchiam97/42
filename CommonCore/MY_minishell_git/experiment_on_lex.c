@@ -11,7 +11,6 @@
 #include <term.h>
 #include <termios.h>
 #include <signal.h>
-
 typedef enum s_tokentype
 {
 	T_WORD,//command or arg
@@ -24,9 +23,12 @@ typedef enum s_tokentype
 	T_AND,// &&
 	T_OR,// ||
 	T_LB,// (
-	T_RB// )
+	T_RB,// )
+	T_ERROR // for when there is an error, a single node is returned...
+				// value: error description
+				// quotetype, expandlater, bracketdepth, isheredocdelim, all 0
+				// next and previous also 0
 }	t_tokentype;
-
 typedef struct s_tokenlinkedlist
 {
 	t_tokentype					type;
@@ -35,10 +37,10 @@ typedef struct s_tokenlinkedlist
 	int							expand_later;
 	int							bracket_depth;
 	int							is_heredoc_delim;
+	int							has_space_before;
 	struct s_tokenlinkedlist	*next;
 	struct s_tokenlinkedlist	*previous;
 }	t_tokenlinkedlist;
-
 typedef struct s_lexer_params
 {
 	char*				cmdline;
@@ -48,7 +50,6 @@ typedef struct s_lexer_params
 	t_tokenlinkedlist	*head;
 	t_tokenlinkedlist	*current;
 }	t_lexer_params;
-
 t_tokentype	tl_assign_token_type2(char *word)
 {
 	char	c1;
@@ -101,7 +102,6 @@ t_tokentype	tl_assign_token_type0(char *word)
 	else
 		return (T_WORD);
 }
-
 int	tl_check_expansion(char *value)
 {
 	int	i;
@@ -117,7 +117,6 @@ int	tl_check_expansion(char *value)
 	}
 	return (expansion);
 }
-
 t_tokenlinkedlist	*tl_make_new_token(char *value, int bracketdepth,
 		int quotetype, t_tokenlinkedlist *prev)
 {
@@ -129,6 +128,7 @@ t_tokenlinkedlist	*tl_make_new_token(char *value, int bracketdepth,
 	newnode->value = value;
 	newnode->type = tl_assign_token_type0(value);
 	newnode->bracket_depth = bracketdepth;
+	newnode->has_space_before = 0;
 	newnode->quotetype = quotetype;
 	if (!prev)
 		newnode->previous = NULL;
@@ -154,7 +154,6 @@ t_tokenlinkedlist	*tl_get_last(t_tokenlinkedlist *head)
 		head = head->next;
 	return (head);
 }
-
 t_tokenlinkedlist	*tl_get_first(t_tokenlinkedlist *node)
 {
 	if (!node)
@@ -163,24 +162,22 @@ t_tokenlinkedlist	*tl_get_first(t_tokenlinkedlist *node)
 		node = node->previous;
 	return (node);
 }
-
-void	tl_add_token(t_tokenlinkedlist **head, t_tokenlinkedlist *new)
+void	tl_add_token(t_tokenlinkedlist **head, t_tokenlinkedlist *newtoken)
 {
 	t_tokenlinkedlist	*last;
 
-	if (!new)
+	if (!newtoken)
 		return ;
 	if (!*head)
 	{
-		*head = new;
+		*head = newtoken;
 		return ;
 	}
 	last = tl_get_last(*head);
-	last->next = new;
-	new->previous = last;
+	last->next = newtoken;
+	newtoken->previous = last;
 	return ;
 }
-
 void	tl_clear_list(t_tokenlinkedlist *list)
 {
 	t_tokenlinkedlist	*tmp;
@@ -194,7 +191,6 @@ void	tl_clear_list(t_tokenlinkedlist *list)
 		list = tmp;
 	}
 }
-
 int	i_is_space(char input)
 {
 	if (input == '\t' || input == ' ')
@@ -202,7 +198,6 @@ int	i_is_space(char input)
 	else
 		return (0);
 }
-
 int	i_is_bracket(char input)
 {
 	if (input == '(' || input == ')')
@@ -226,7 +221,7 @@ int	i_is_quote(char input)
 	else
 		return (0);
 }
-t_tokenlinkedlist	*h_handle_quote_token(t_lexer_params *lp)
+t_tokenlinkedlist	*h_handle_quote(t_lexer_params *lp)
 {
 	int					quote;
 	char				*value;
@@ -259,7 +254,6 @@ t_tokenlinkedlist	*h_handle_quote_token(t_lexer_params *lp)
 	lp->parsed_chars = j + 1;
 	return (new);
 }
-
 t_tokenlinkedlist	*h_handle_bracket(t_lexer_params *lp)
 {
 	t_tokenlinkedlist	*new;
@@ -267,11 +261,19 @@ t_tokenlinkedlist	*h_handle_bracket(t_lexer_params *lp)
 	if (lp->cmdline[lp->i] == '(')
 	{
 		(lp->bracketdepth)++;
-		new = tl_make_new_token("(", lp->bracketdepth, 0, lp->current);
+		new = tl_make_new_token(
+				ft_strdup("("),
+				lp->bracketdepth,
+				0,
+				lp->current);
 	}
 	else if (lp->cmdline[lp->i] == ')')
 	{
-		new = tl_make_new_token(")", lp->bracketdepth, 0, lp->current);
+		new = tl_make_new_token(
+				ft_strdup(")"),
+				lp->bracketdepth,
+				0,
+				lp->current);
 		(lp->bracketdepth)--;
 	}
 	lp->parsed_chars = 1;
@@ -314,7 +316,6 @@ t_tokenlinkedlist	*h_handle_word(t_lexer_params *lp)
 {
 	int					j;
 	char				*value;
-	int					expand;
 	t_tokenlinkedlist	*new;
 
 	j = 0;
@@ -334,7 +335,7 @@ t_tokenlinkedlist	*h_handle_word(t_lexer_params *lp)
 	lp->parsed_chars = j;
 	return (new);
 }
-t_tokenlinkedlist	*p_handle_eof(t_lexer_params *lp)
+t_tokenlinkedlist	*h_handle_eof(t_lexer_params *lp)
 {
 	t_tokenlinkedlist *new;
 
@@ -350,11 +351,10 @@ t_tokenlinkedlist	*p_handle_eof(t_lexer_params *lp)
 	new->previous = lp->current;
 	new->quotetype = 0;
 	new->type = T_EOF;
-	new->value = "EOF";
+	new->value = ft_strdup("EOF");
 	return(new);
 }
-
-t_lexer_params	*p_init_lexer_params(char *cmdline)
+t_lexer_params	*lp_init_lexer_params(char *cmdline)
 {
 	t_lexer_params*	l_params;
 
@@ -374,57 +374,121 @@ t_lexer_params	*p_init_lexer_params(char *cmdline)
 	l_params->current = NULL;
 	return (l_params);
 }
-void	p_clear_lexer_params(t_lexer_params *lp)
+void	lp_clear_lexer_params(t_lexer_params *lp)
 {
 	free(lp->cmdline);
 	free(lp);
 }
+////////////////////////////////////////////////////////////
 
-t_tokenlinkedlist	*parsecmdline(char *cmdline)
+void	setupflags(t_lexer_params *lp, int *space_bef, t_tokenlinkedlist **new, int *space)
+{
+	*space_bef = 0;
+	if (lp->cmdline[lp->i - 1] && i_is_space(lp->cmdline[lp->i -1]))
+		*space_bef = 1;
+	lp->parsed_chars = 0;
+	*space = 0;
+	*new = NULL;
+}
+
+void	handlecmdlinechar(t_lexer_params *lp, t_tokenlinkedlist **new, int *space)
+{
+	if (i_is_quote(lp->cmdline[lp->i]))
+		*new = (h_handle_quote(lp));
+	else if (i_is_bracket(lp->cmdline[lp->i]))
+		*new = (h_handle_bracket(lp));
+	else if (i_is_op(lp->cmdline[lp->i]))
+		*new = (h_handle_operator(lp));
+	else if (i_is_space(lp->cmdline[lp->i]))
+	{
+		h_handle_space(lp);
+		*space = 1;
+	}
+	else
+		*new = h_handle_word(lp);
+}
+
+t_tokenlinkedlist	*lp_parsecmdline(char *cmdline)
 {
 	t_lexer_params		*lp;
 	t_tokenlinkedlist	*new;
 	t_tokenlinkedlist	*list;
 	int					space;
+	int					space_before_token;
 
-	lp = p_init_lexer_params(cmdline);
+	lp = lp_init_lexer_params(cmdline);
 	if (!lp)
 		return (NULL);
 	while (lp->cmdline[lp->i] != '\0')
 	{
-		lp->parsed_chars = 0;
-		space = 0;
-		new = NULL;
-		if (i_is_quote(lp->cmdline[lp->i]))
-			new = (h_handle_quote_token(lp));
-		else if (i_is_bracket(lp->cmdline[lp->i]))
-			new = (h_handle_bracket(lp));
-		else if (i_is_op(lp->cmdline[lp->i]))
-			new = (h_handle_operator(lp));
-		else if (i_is_space(lp->cmdline[lp->i]))
-		{
-			h_handle_space(lp);
-			space = 1;
-		}
-		else
-			new = h_handle_word(lp);
+		setupflags(lp, &space_before_token, &new, &space);
+		handlecmdlinechar(lp, &new, &space);
 		if (!new && space == 0)
-			return (tl_clear_list(lp->head), p_clear_lexer_params(lp), NULL);
+			return (tl_clear_list(lp->head), lp_clear_lexer_params(lp), NULL);
+		if (new)
+			new->has_space_before = space_before_token;
 		tl_add_token(&lp->head, new);
 		lp->i += lp->parsed_chars;
 		lp->current = tl_get_last(lp->head);
 	}
-	new = p_handle_eof(lp);
+	new = h_handle_eof(lp);
 	tl_add_token(&lp->head, new);
 	list = lp->head;
-	p_clear_lexer_params(lp);
-	return (list);
+	return (lp_clear_lexer_params(lp), list);
 }
 
+
+// t_tokenlinkedlist	*lp_parsecmdline(char *cmdline)
+// {
+// 	t_lexer_params		*lp;
+// 	t_tokenlinkedlist	*new;
+// 	t_tokenlinkedlist	*list;
+// 	int					space;
+// 	int					space_before_token;
+
+// 	lp = lp_init_lexer_params(cmdline);
+// 	if (!lp)
+// 		return (NULL);
+// 	while (lp->cmdline[lp->i] != '\0')
+// 	{
+// 		space_before_token = 0;
+// 		if (cmdline[lp->i - 1] && i_is_space(lp->cmdline[lp->i -1]))
+// 			space_before_token = 1;
+// 		lp->parsed_chars = 0;
+// 		space = 0;
+// 		new = NULL;
+// 		if (i_is_quote(lp->cmdline[lp->i]))
+// 			new = (h_handle_quote(lp));
+// 		else if (i_is_bracket(lp->cmdline[lp->i]))
+// 			new = (h_handle_bracket(lp));
+// 		else if (i_is_op(lp->cmdline[lp->i]))
+// 			new = (h_handle_operator(lp));
+// 		else if (i_is_space(lp->cmdline[lp->i]))
+// 		{
+// 			h_handle_space(lp);
+// 			space = 1;
+// 		}
+// 		else
+// 			new = h_handle_word(lp);
+// 		if (!new && space == 0)
+// 			return (tl_clear_list(lp->head), lp_clear_lexer_params(lp), NULL);
+// 		if (new)
+// 			new->has_space_before = space_before_token;
+// 		tl_add_token(&lp->head, new);
+// 		lp->i += lp->parsed_chars;
+// 		lp->current = tl_get_last(lp->head);
+// 	}
+// 	new = h_handle_eof(lp);
+// 	tl_add_token(&lp->head, new);
+// 	list = lp->head;
+// 	lp_clear_lexer_params(lp);
+// 	return (list);
+// }
 /*logic/flow
 - init parameters
 - go through cmdline till eof making new tokens per char block
-	- if in quotes, till you see a matching quote just keep adding to word. note quote type
+	- if in quotes, till you see a matching quote just keep adding to word. 
+	note quote type
 	- if brackets, increase or decrease bracket depth
 	- if operator, handle single vs double
 	- if space, keep adding to i till hitting new word char
@@ -472,6 +536,7 @@ void	print_tester(t_tokenlinkedlist *t)
 			"Bracket '%i'\n"
 			"Expand '%i'\n"
 			"Heredoc '%i'\n"
+			"Has_Space_Before '%i'\n"
 			"Previous '%p'\n"
 			"Next '%p'\n"
 			"=======================\n",
@@ -480,13 +545,13 @@ void	print_tester(t_tokenlinkedlist *t)
 			t->bracket_depth,
 			t->expand_later,
 			t->is_heredoc_delim,
+			t->has_space_before,
 			(void *) t->previous,
 			(void *) t->next);
 		t = t->next;
 	}
 	printf("token count: %i\n", count);
 }
-
 void	gpt_print_tester(t_tokenlinkedlist *t)
 {
 	int		count;
@@ -495,8 +560,8 @@ void	gpt_print_tester(t_tokenlinkedlist *t)
 
 	count = 0;
 	printf("\n=========== Lexer Results ===========\n");
-	printf("%-4s %-8s %-40s %-5s %-7s %-7s %-7s %-14s %-14s\n",
-		"#", "TYPE", "VALUE", "Q", "BRACK", "EXP", "HD", "PREV", "NEXT");
+	printf("%-4s %-8s %-40s %-5s %-7s %-7s %-7s %-7s %-14s %-14s\n",
+		"#", "TYPE", "VALUE", "Q", "BRACK", "EXP", "HD", "SpaceBef","PREV", "NEXT");
 	printf("------------------------------------------------------------------------------------------\n");
 	while (t)
 	{
@@ -527,7 +592,7 @@ void	gpt_print_tester(t_tokenlinkedlist *t)
 
 		val = t->value ? t->value : "(null)";
 
-		printf("%-4d %-8s %-40.40s %-5d %-7d %-7d %-7d %-14p %-14p\n",
+		printf("%-4d %-8s %-40.40s %-5d %-7d %-7d %-7d %-7d %-14p %-14p\n",
 			count,
 			type,
 			val,
@@ -535,6 +600,7 @@ void	gpt_print_tester(t_tokenlinkedlist *t)
 			t->bracket_depth,
 			t->expand_later,
 			t->is_heredoc_delim,
+			t->has_space_before,
 			(void *)t->previous,
 			(void *)t->next);
 		t = t->next;
@@ -542,7 +608,6 @@ void	gpt_print_tester(t_tokenlinkedlist *t)
 	printf("------------------------------------------------------------------------------------------\n");
 	printf("Token count: %d\n", count);
 }
-
 char *gpt_escape_value(const char *s)
 {
     int i = 0, j = 0;
@@ -586,8 +651,6 @@ char *gpt_escape_value(const char *s)
     out[j] = '\0';
     return out;
 }
-
-
 void	gpt_print_values_inline(t_tokenlinkedlist *t)
 {
 	char *val;
@@ -602,18 +665,22 @@ void	gpt_print_values_inline(t_tokenlinkedlist *t)
 	}
 	printf("\n");
 }
-
-
 int main(int argc, char **argv)
 {
 	// do make in the libft and printflibft dirs
 	// cc -g experiment_on_lex.c libft/libftprintf.a libft/libft/libft.a
-	printf("%s\n", argv[1]);
-	//print_tester(parsecmdline(argv[1]));
-	gpt_print_tester(parsecmdline(argv[1]));
-	gpt_print_values_inline(parsecmdline(argv[1]));
+	// have an input.txt file to write in test input
+	// ./a.out "$(cat input.txt)"
+	printf("cmdline input: %s\n", argv[1]);
+	printf("\n");
+	print_tester(lp_parsecmdline(argv[1]));
+	printf("\n");
+	printf("chart:\n");
+	gpt_print_tester(lp_parsecmdline(argv[1]));
+	printf("\n");
+	printf("in-line view:\n");
+	gpt_print_values_inline(lp_parsecmdline(argv[1]));
 }
-
 //////////////////////////////////////////////////////////////////////////
 
 //					Attempt at the tree bit	(pseudocode)				//
@@ -632,55 +699,36 @@ typedef enum s_treetype
 	CMD,
 	SUBSHELL,
 }								e_treetype;
-
 typedef struct s_ast_and
 {
 	//type
 }								t_ast_and;
-
 typedef struct s_ast_or
 {
 	//type
 }								t_ast_or;
-
 typedef struct s_ast_pipe
 {
 	//type
 }								t_ast_pipe;
-
 typedef struct s_ast_subshell
 {
 	//type
 }								t_ast_subshell;
-
 typedef struct s_ast_cmd
 {
 	//type
 }								t_ast_cmd;
-
 typedef struct s_ast_tree
 {
 	int							value;
 
 }								t_ast_tree;
 
-//t_ast_tree *form_tree(*tokenlinkedlist cmdlist)
-// while still got stuff in node_linked_list
-// move down linked list L to R
-// check for bracket depth lowest range... equal to current... ignore all in diff subshell/ deeper depth
-// look for and pick logical operation (&& or ||)... set as root
-// left child: all on left & in same bracket depth... form_tree(start of range to right before)
-// right child: all on right & in same bracket depth... form_tree(right after operation to end of range)
-// look for and pick pipe and equal depth range
-// left child: all on left & in same bracket depth... form_tree(start of range to right before)
-// right child: all on right & in same bracket depth... form_tree(right after operation to end of range)
-// look for and pick command and equal depth range
-// left child: parse word to cmd, args, options etc
-// right child: parse word to cmd, ""
-// return
-// look for and pick subshell and equal depth range
-// rm brackets, current depth
-//	-1 . only 1 child form_tree(rest of stuff goes here to this child).
+/*
 
-// run tree...
-// L, R, H using dfs... return head
+Main logic flow for the linked list to AST tree
+1. Check through first pass on all the segments
+2. Go through the 
+3. 
+*/

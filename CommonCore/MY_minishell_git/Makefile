@@ -40,10 +40,11 @@ SRCS = minishell.c \
 	ft_split_r/ft_split_r.c \
 	ft_option_parser/ft_option_parser.c \
 	minishell_signal_handler.c \
-	minishell_builtin_echo.c \
-	minishell_builtin_exit.c \
-	minishell_builtin_pwd.c	\
-	minishell_builtin_cd.c	\
+	builtin/minishell_builtin_echo.c \
+	builtin/minishell_builtin_exit.c \
+	builtin/minishell_builtin_pwd.c	\
+	builtin/minishell_builtin_cd.c	\
+	builtin/minishell_builtin_env.c \
 	minishell_cmdline_handler.c
 
 # Source files - Bonus
@@ -54,9 +55,11 @@ BSRCS = minishell_bonus.c \
 	ft_split_r/ft_split_r.c \
 	ft_option_parser/ft_option_parser.c \
 	minishell_signal_handler.c \
-	minishell_builtin_echo.c \
-	minishell_builtin_exit.c \
-	minishell_builtin_pwd.c \
+	builtin/minishell_builtin_echo.c \
+	builtin/minishell_builtin_exit.c \
+	builtin/minishell_builtin_pwd.c	\
+	builtin/minishell_builtin_cd.c	\
+	builtin/minishell_builtin_env.c \
 	minishell_cmdline_handler.c
 
 RM = rm -fr

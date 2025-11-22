@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_builtin_cd.c                             :+:      :+:    :+:   */
+/*   tl_check_token_expansion.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/15 14:41:57 by rchiam            #+#    #+#             */
-/*   Updated: 2025/11/15 14:46:09 by rchiam           ###   ########.fr       */
+/*   Created: 2025/11/20 20:53:04 by rchiam            #+#    #+#             */
+/*   Updated: 2025/11/22 14:01:28 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "lexer.h"
 
-// int minishell_cd_handler(t_ms *msp)
-// {
-// 	//to do...
-// }
+// func: 	check if the string has expansion characters $ or *
+// input:	string
+// actions:	-
+// output:	1 or 0
+
+int	tl_check_expansion(char *value)
+{
+	int	i;
+	int	expansion;
+
+	i = 0;
+	expansion = 0;
+	while (value[i])
+	{
+		if (value[i] == '$' || value[i] == '*')
+			expansion = 1;
+		i++;
+	}
+	return (expansion);
+}

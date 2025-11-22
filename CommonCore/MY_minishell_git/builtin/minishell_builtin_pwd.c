@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_signal_handler.c                         :+:      :+:    :+:   */
+/*   minishell_builtin_pwd.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twtan <twtan@student.42singapore.sg>       +#+  +:+       +#+        */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 20:12:49 by twtan             #+#    #+#             */
-/*   Updated: 2025/10/30 20:13:29 by twtan            ###   ########.fr       */
+/*   Created: 2025/11/15 14:20:21 by rchiam            #+#    #+#             */
+/*   Updated: 2025/11/15 14:36:44 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	minishell_signal_handler(int sigcode)
+void	minishell_pwd_handler(void)
 {
-	if (sigcode == SIGINT)
-	{
-		g_signal = sigcode;
-		ft_printf("\n");
-	}
-	if (sigcode == SIGTERM)
-	{
-		g_signal = sigcode;
-		ft_printf("\nTermination Signal\n");
-	}
-	
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	printf("%s\n", cwd);
+	free(cwd);
 }
+

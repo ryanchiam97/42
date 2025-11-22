@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_signal_handler.c                         :+:      :+:    :+:   */
+/*   minishell_tokeniser.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: twtan <twtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/30 20:12:49 by twtan             #+#    #+#             */
-/*   Updated: 2025/10/30 20:13:29 by twtan            ###   ########.fr       */
+/*   Created: 2025/11/20 16:38:52 by twtan             #+#    #+#             */
+/*   Updated: 2025/11/20 16:38:55 by twtan            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_TOKENISER_H
+# define MINISHELL_TOKENISER_H
 
-void	minishell_signal_handler(int sigcode)
+# include "../ft_split_r/ft_split_r.h"
+
+typedef struct s_node
 {
-	if (sigcode == SIGINT)
-	{
-		g_signal = sigcode;
-		ft_printf("\n");
-	}
-	if (sigcode == SIGTERM)
-	{
-		g_signal = sigcode;
-		ft_printf("\nTermination Signal\n");
-	}
-	
-}
+	char	*name; 		// readable aid for user in identifying layer
+	int	type;		// reserved usage, maybe to indicate actionable function to attach
+	void	**nodes;	// tree branches
+	int	layer;		// placeholder to indicate which layer 
+}	t_node;
+
+
+#endif

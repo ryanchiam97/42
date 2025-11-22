@@ -1,3 +1,6 @@
-testing | ("0hi $USER" || ('test' << hihihi && *.out >> hithere < i) > o | u)
-hihinextline
-test'ing'again
+echo -n hello
+
+testing | (0hi $USER '$USER' "$USER" || ('test' << hihihi && (*.out >> (hithere < i))) > o | u) he"l*l"o th'e$r'e
+
+new_state = parse(string[i]);
+if (new_state == ERROR) 

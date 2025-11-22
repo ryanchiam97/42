@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_builtin_exit.c                           :+:      :+:    :+:   */
+/*   minishell_builtin_echo.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: twtan <twtan@student.42singapore.sg>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,23 +10,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-// func: minishell_exit_handler
-// handles the builtin command exit
-// accepts an integer to return as exit number
-// will exit the minishell when executed
-void	minishell_exit_handler(t_ms *msp)
+/*
+int	minishell_echo_option(char **cmd)
 {
-	ft_printf("exit\n");
-	msp->loop = 0;
-	msp->exit_nbr = 0;
-	if (msp->split_cmd[1] != 0)
+	int	option_count;
+	int	cmd_idx;
+
+	option_count = 0;
+	cmd_idx = -1;
+	while 
+}
+*/
+
+void	minishell_echo_handler(t_ms *msp)
+{
+	bool	prt_newline;
+	int		count;
+ 
+	prt_newline = 1;
+	if ((ft_strncmp(msp->split_cmd[1], "-n", 2) == 0) && (msp->split_cmd[1] != 0))
+		prt_newline = 0;
+	else
+		ft_printf("%s", msp->split_cmd[1]);
+	count = 1;
+	while (msp->split_cmd[++count] != 0)
 	{
-		if (ft_atoi_r(msp->split_cmd[1], &(msp->exit_nbr)) == -1)
-		{
-			msp->exit_nbr = 2;
-			ft_printf("minishell: exit: %s: numeric argument required\n",msp->split_cmd[1]);
-		}
+		// need to expand checks for environment variables and other tokens
+		ft_printf("%s", msp->split_cmd[count]);
 	}
+	if (prt_newline == 1)
+		ft_printf("\n");
 }
