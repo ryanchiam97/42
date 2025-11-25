@@ -1,3 +1,6 @@
 [submodule "CommonCore/minishellgit"]
 	path = CommonCore/minishellgit
 	url = git@vogsphere.42singapore.sg:vogsphere/intra-uuid-49ddf01a-1be4-4eb8-a60e-4693b5f02cc3-7055958-twtan
+[submodule "CommonCore/minishelloutside"]
+	path = CommonCore/minishelloutside
+	url = git@github.com:ryanchiam97/minishell.git
