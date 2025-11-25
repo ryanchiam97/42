@@ -1,1 +1,0 @@
-echo -n hello-there-testing | (0hi $USER '$USER' "$USER" || ('test' << hihihi && (*.out >> (hithere < i))) > o | u) he"l*l"o th'e$r'e
