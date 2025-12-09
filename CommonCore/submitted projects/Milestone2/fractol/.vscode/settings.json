@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"mlx_int.h": "c",
-		"xlib.h": "c",
-		"xutil.h": "c",
-		"xshm.h": "c",
-		"keysymdef.h": "c"
-	}
-}
