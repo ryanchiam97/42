@@ -4,3 +4,6 @@
 [submodule "CommonCore/minishelloutside"]
 	path = CommonCore/minishelloutside
 	url = git@github.com:ryanchiam97/minishell.git
+[submodule "42_examshell"]
+	path = 42_examshell
+	url = https://github.com/terminal-42s/42_examshell
