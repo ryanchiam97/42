@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ryanfilter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 21:54:03 by rchiam            #+#    #+#             */
-/*   Updated: 2026/01/29 22:23:15 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/02/04 23:56:04 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <string.h>
 
 #ifndef BUFFERSIZE
-# define BUFFERSIZE 10
+# define BUFFERSIZE 2
 #endif
 
 int main(int argc, char **argv)
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	
 	rtnline = malloc(BUFFERSIZE + 1);
 	if (!rtnline)
-		return (perror("Error:"), 1);
+		return (perror("Error"), 1);
 	
 	totallen = 0;
 	readlen = BUFFERSIZE;
@@ -39,13 +39,13 @@ int main(int argc, char **argv)
 	{
 		readlen = read(0, &(rtnline[totallen]), BUFFERSIZE);
 		if (readlen == -1)
-			return (free(rtnline), perror("Error:"), 1);
+			return (free(rtnline), perror("Error"), 1);
 		totallen += readlen;
 		if (readlen == BUFFERSIZE)
 		{
 			rtnline = realloc(rtnline, totallen + BUFFERSIZE + 1);
 			if (!rtnline)
-				return (free(rtnline), perror("Error:"), 1);
+				return (free(rtnline), perror("Error"), 1);
 		}
 	}
 	
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 		else
 			i++;
 	}
-	printf("%s\n", rtnline);
+	printf("%s", rtnline);
 	free(rtnline);
 	return (0);
 }
