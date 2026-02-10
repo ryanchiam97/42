@@ -5,136 +5,133 @@
 # define BUFFER_SIZE 42
 #endif
 
-int has_nl(char *str)
+int findnl(char *str)
 {
-    int i = 0;
-    while (str && str[i])
-    {
-        if (str[i] == '\n')
-            return 1;
-        i++;
-    }
-    return 0;
+	int i = 0;
+	if (!str)
+		return (-1);
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+int ft_strlen(char *s)
+{
+	int i = 0;
+	if (!s)
+		return (0);
+	while (s[i])
+		i++;
+	return (i);
 }
 
-int ft_strlen(char *str)
+char *freejoin(char *stash, int stashlen, char *buffer, int bufferlen)
 {
-    int i = 0;
-    if (!str) return 0;
-    while (str[i])
-        i++;
-    return i;
+	if (!stash)
+	{
+		char* new = malloc(bufferlen + 1);
+		if (!new) return 0;
+		int i = 0;
+		while (i < bufferlen)
+		{
+			new[i] = buffer[i];
+			i++;
+		}
+		new[i] = 0;
+		return (new);
+	}
+	char *newstash = malloc(stashlen + bufferlen + 1);
+	if (!newstash)
+		return (0);
+	int i = 0;
+	int j = 0;
+	while (i < stashlen)
+	{
+		newstash[i] = stash[i];
+		i++;
+	}
+	while (j < bufferlen)
+	{
+		newstash[i + j] = buffer[j];
+		j++;
+	}
+	newstash[i + j] = '\0';
+	free(stash);
+	return (newstash);
 }
 
-char *ft_strjoin(char *s1, char *s2)
+char *substrdupe(char *stash, int start, int len)
 {
-    int i = 0, j = 0;
-    char *new = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-    if (!new)
-    {
-        free(s1);
-        return 0;
-    }
-    while (s1 && s1[i])
-        new[j++] = s1[i++];
-    i = 0;
-    while (s2 && s2[i])
-        new[j++] = s2[i++];
-    new[j] = 0;
-    free(s1);
-    return (new);
-}
-
-char *extractline(char *s)
-{
-    char *line;
-    int i = 0;
-
-    while (s[i] && s[i]!='\n')
-        i++;
-    line = malloc(i + (s[i]=='\n') + 1);
-    if (!line)
-        return 0;
-    i = 0;
-    while (s[i] && s[i]!='\n')
-    {
-        line[i] = s[i];
-        i++;
-    }
-    if (s[i]=='\n')
-    {
-        line[i] = '\n';
-        i++;
-    }
-    line[i] = 0;
-    return line;
-}
-
-char *trimstash(char *s)
-{
-    int i = 0;
-    int j = 0;
-    char *new;
-    while (s[i] && s[i]!='\n')
-        i++;
-    if (!s[i])
-    {
-        free(s);
-        return NULL;
-    }
-    i++;
-    new = malloc(ft_strlen(s) - i + 1);
-    if (!new)
-        return NULL;
-    while (s[i])
-        new[j++] = s[i++];
-    new[j] = 0;
-    free(s);
-    return (new);
+	if (!stash)
+		return (0);
+	char *rtn_str = malloc(len + 1);
+	if (!rtn_str)
+		return (0);
+	int i = 0;
+	while (stash[start + i] && i < len)
+	{
+		rtn_str[i] = stash[start + i];
+		i++;
+	}
+	rtn_str[i] = 0;
+	return (rtn_str);
 }
 
 char *get_next_line(int fd)
 {
-    static char *stash;
-    char buffer[BUFFER_SIZE + 1];
-    int r;
-    char *line;
+	static char *stash[1024];
+	char buf[BUFFER_SIZE + 1];
+	int nl;
+	int rd;
 
-    if (fd < 0 || BUFFER_SIZE <= 0)
-        return NULL;
-    while(!has_nl(stash) && (r = read(fd, buffer, BUFFER_SIZE)) > 0)
-    {
-        buffer[r] = 0;
-        stash = ft_strjoin(stash, buffer);
-    }
-    if (!stash)
-        return NULL;
-    line = extractline(stash);
-    stash = trimstash(stash);
-    return (line);
+	if (fd < 0 || fd >= 1024)
+		return (0);
+	rd = 1;
+	while ((nl = findnl(stash[fd])) == -1 && rd > 0)
+	{
+		rd = read(fd, buf, BUFFER_SIZE);
+		if (rd < 0)
+			return (free(stash[fd]), stash[fd] = 0, NULL);
+		if (rd == 0)
+			break ;
+		buf[rd] = 0;
+		stash[fd] = freejoin(stash[fd], ft_strlen(stash[fd]), buf, rd);
+		if (!(stash[fd]))
+			return (free(stash[fd]), stash[fd] = 0, NULL);
+	}
+	if (nl != -1)
+	{
+		char *line = substrdupe(stash[fd], 0, nl + 1);
+		char *remaining = substrdupe(stash[fd], nl + 1, ft_strlen(stash[fd]) - (nl + 1));
+		free(stash[fd]);
+		stash[fd] = remaining;
+		if (!line || !(stash[fd]))
+			return (free(stash[fd]), free(line), stash[fd] = 0, NULL);
+		return (line);
+	}
+	if (!stash[fd] || stash[fd][0] == '\0')
+	{
+		free(stash[fd]);
+		stash[fd] = 0;
+		return (0);
+	}
+	{
+		char *line = stash[fd];
+		stash[fd] = 0;
+		return (line);
+	}
 }
-
-#include <fcntl.h>
 #include <stdio.h>
-
-int main (int argc, char **argv)
+int main(void)
 {
-    int fd;
-    char *line;
-
-    if (argc != 2)
-    {
-        printf("error arg");
-        return 1;
-    }
-    fd = open(argv[1], O_RDONLY);
-    if (fd < 0)
-        return(perror("open"), 1);
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-    return (0);
+	char *tmp;
+	while ((tmp = get_next_line(0)))
+	{
+		printf("%s",tmp);
+		free(tmp);
+	}
+	return (0);
 }

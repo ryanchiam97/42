@@ -1,68 +1,61 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   nqueens.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/27 17:44:39 by rchiam            #+#    #+#             */
-/*   Updated: 2026/01/27 20:12:09 by rchiam           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <stdlib.h>
 #include <stdio.h>
-#include <limits.h>
 
-void	printsolution(int *columns)
+void printboard(int *board, int size)
 {
-	int i = 0;
-	while (columns[i])
+	if (!board)
+		return ;
+	printf("%i", board[0]);
+	int i = 1;
+	while (i < size)
 	{
-		printf("%i ", columns[i]);
+		printf(" %i", board[i]);
 		i++;
 	}
 	printf("\n");
 }
 
-int isok(int r, int c, int *col)
+int issafe(int *board, int pos)
 {
-	for (int pc = 0; pc < c; pc++)
+	int i = 0;
+	while (i < pos)
 	{
-		int pr = col[pc];
-		if (pr == r)
-			return 0;
-		if (abs(pr - r) == abs(pc - c))
-			return 0;
+		if (board[i] == board[pos] || i == pos || abs(board[i] - board[pos]) == abs(i - pos))
+			return (0);
+		i++;
 	}
-	return 1;
+	return (1);
 }
 
-void solve(int* col, int c, int n)
+void placequeen(int *board, int pos, int n)
 {
-	if (c == n)
-		return (printsolution(col));
-	
-	for (int r = 0; r < c; r++)
+	if (pos == n)
+		return (printboard(board, n));
+	int i = 0;
+	while (i < n)
 	{
-		if (!isok(r, c, col))
-			continue ;
-		col[c] = r;
-		solve(col, c + 1, n);
+		board[pos] = i;
+		if (issafe(board, pos))
+			placequeen(board, pos + 1, n);
+		i++;
 	}
 }
 
 int main(int argc, char **argv)
 {
-	if (argc != 2)
+	if (argc != 2 || argv[1][0] == 0)
 		return (1);
 	int n = atoi(argv[1]);
-	if (n < 0 || n > INT_MAX)
+	if (n <= 0)
 		return (1);
-	int *columnrecord = (int *)malloc(sizeof(int) * n);
-	if (!columnrecord)
-		return (1);
-	solve(columnrecord, 0, n);
-	free(columnrecord);
-	return 0;
+	if (n == 1)
+	{
+		printf("1\n");
+		return (0);
+	}
+	if (n <= 3)
+		return (0);
+	int board[n];
+	placequeen(board, 0, n);
+	return (0);
 }

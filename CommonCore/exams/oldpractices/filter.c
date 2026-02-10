@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifndef
+#ifndef BUFER_SIZE
 # define BUFFER_SIZE 5
 #endif
 
@@ -22,9 +22,9 @@ int main(int argc, char **argv)
             return (perror("Error: malloc error"), 1);
         int windowlen = 0;
         char buffer[BUFFER_SIZE];
-        while (true)
+        while (1)
         {
-            bytesread = read(0, buffer, BUFFER_SIZE);
+            int bytesread = (int)read(0, buffer, BUFFER_SIZE);
             if (bytesread < 0)
             {
                 perror("Error: read error");
