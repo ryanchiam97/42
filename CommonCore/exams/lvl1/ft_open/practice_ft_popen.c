@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 21:10:40 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/08 22:51:53 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/15 23:50:04 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	ft_popen(const char *file, char *const argv[], char type)
 {
 	int		fd[2];
-	pit_t	pid;
+	pid_t	pid;
 
 	if (!file || !argv || (type != 'r' && type != 'w'))
 		return (-1);
