@@ -1,0 +1,155 @@
+````md
+# Git Submodules Cheat Sheet
+
+## What a submodule is
+A submodule is a **Git repository inside another Git repository**.
+
+The parent repo does **not** store the submodule like a normal folder.  
+It stores a **pointer to a specific commit** of that child repo.
+
+---
+
+## Add a submodule
+```bash
+git submodule add <repo-url> <path>
+git commit -m "Add submodule"
+````
+
+Example:
+
+```bash
+git submodule add https://github.com/user/libfoo.git external/libfoo
+```
+
+This creates:
+
+* `.gitmodules`
+* a tracked submodule entry in the parent repo
+
+---
+
+## Clone a repo that has submodules
+
+Best way:
+
+```bash
+git clone --recurse-submodules <repo-url>
+```
+
+If you already cloned it:
+
+```bash
+git submodule update --init --recursive
+```
+
+---
+
+## Core mental model
+
+A submodule is **not a normal folder** and **not live-synced automatically**.
+
+The parent repo tracks:
+
+* where the submodule lives
+* which exact commit of the submodule should be used
+
+So if the submodule advances, the parent repo does **not** automatically follow it.
+You must update the submodule, then commit the new pointer in the parent repo.
+
+---
+
+## If you change code inside the submodule
+
+You usually need **2 commits**:
+
+1. Commit inside the submodule repo
+2. Commit the updated submodule pointer in the parent repo
+
+Example:
+
+```bash
+cd external/libfoo
+git add .
+git commit -m "Change inside submodule"
+git push
+
+cd ../..
+git add external/libfoo
+git commit -m "Bump libfoo submodule"
+git push
+```
+
+---
+
+## If the submodule looks wrong after pulling
+
+Run:
+
+```bash
+git submodule update --init --recursive
+```
+
+This checks out the submodule commit that the parent repo expects.
+
+---
+
+## Update a submodule to a newer upstream commit
+
+```bash
+cd external/libfoo
+git checkout main
+git pull
+
+cd ../..
+git add external/libfoo
+git commit -m "Update submodule pointer"
+```
+
+---
+
+## Common gotcha
+
+If `git status` in the parent repo shows the submodule as modified, it usually means one of these:
+
+* the submodule is currently at a different commit than the parent repo expects
+* you made uncommitted changes inside the submodule
+
+---
+
+## Remove a submodule
+
+```bash
+git rm -f <path-to-submodule>
+rm -rf .git/modules/<path-to-submodule>
+git commit -m "Remove submodule"
+```
+
+---
+
+## When submodules are useful
+
+Use them when you want:
+
+* a separate repo to remain truly separate
+* the parent repo to pin an exact version
+* independent history for that dependency/project
+
+---
+
+## Why people find them annoying
+
+Submodules can be annoying because:
+
+* cloning needs extra care
+* updates are a 2-step process
+* teammates often forget `--recurse-submodules`
+* detached HEAD states can confuse people
+
+---
+
+## One-line summary
+
+A submodule is a **separate repo whose exact commit is pinned by the parent repo**.
+
+```
+```
