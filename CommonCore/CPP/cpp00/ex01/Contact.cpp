@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/15 23:14:58 by rchiam            #+#    #+#             */
+/*   Updated: 2026/04/15 23:47:06 by rchiam           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Contact.hpp"
 
-Contact::Contact(/* args */)
+Contact::Contact()
 {
 }
 
@@ -8,31 +20,51 @@ Contact::~Contact()
 {
 }
 
-std::string Contact::GetFirstName()
+void	Contact::setFirstName(const std::string& newfirstname)
 {
-    return this->firstname;
-}
-std::string Contact::GetLastName()
-{
-    return this->lastname;
+    _firstName = newfirstname;
 }
 
-std::string Contact::GetNickName()
+void	Contact::setLastName(const std::string& newlastname)
 {
-    return this->nickname;
+    _lastName = newlastname;
 }
 
-void	Contact::updateFirstName(std::string newfirstname)
+void	Contact::setNickName(const std::string& newnickname)
 {
-    this->firstname = newfirstname;
+    _nickName = newnickname;
+}
+void    Contact::setPhoneNumber(const std::string& phonenumber)
+{
+    _phoneNumber=phonenumber;
 }
 
-void	Contact::updateLastName(std::string newlastname)
+void    Contact::setDarkestSecret(const std::string& darkestsecret)
 {
-    this->lastname = newlastname;
+    _darkestSecret=darkestsecret;
 }
 
-void	Contact::updateNickName(std::string newnickname)
+
+std::string Contact::getFirstName() const
 {
-    this->nickname = newnickname;
+    return (_firstName);
+}
+std::string Contact::getLastName() const
+{
+    return (_lastName);
+}
+
+std::string Contact::getNickName() const
+{
+    return (_nickName);
+}
+
+std::string Contact::getPhoneNumber() const
+{
+    return (_phoneNumber);
+}
+
+std::string Contact::getDarkestSecret() const
+{
+    return (_darkestSecret);
 }
