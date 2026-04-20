@@ -1,3 +1,6 @@
 [submodule "42_examshell"]
 	path = 42_examshell
 	url = https://github.com/terminal-42s/42_examshell
+[submodule "CommonCore/Cub3doutside"]
+	path = CommonCore/Cub3doutside
+	url = git@github.com:AlexTanTK/42cub3d.git

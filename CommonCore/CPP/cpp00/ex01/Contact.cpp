@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/15 23:14:58 by rchiam            #+#    #+#             */
+/*   Updated: 2026/04/15 23:47:06 by rchiam           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Contact.hpp"
 
 Contact::Contact()
@@ -8,52 +20,51 @@ Contact::~Contact()
 {
 }
 
-void Contact::setFirstName(std::string firstName)
+void	Contact::setFirstName(const std::string& newfirstname)
 {
-	_firstName = firstName;
+    _firstName = newfirstname;
 }
 
-void Contact::setLastName(std::string lastName)
+void	Contact::setLastName(const std::string& newlastname)
 {
-	_lastName = lastName;
+    _lastName = newlastname;
 }
 
-void Contact::setNickName(std::string nickName)
+void	Contact::setNickName(const std::string& newnickname)
 {
-	_nickName = nickName;
+    _nickName = newnickname;
+}
+void    Contact::setPhoneNumber(const std::string& phonenumber)
+{
+    _phoneNumber=phonenumber;
 }
 
-void Contact::setPhoneNumber(std::string phoneNumber)
+void    Contact::setDarkestSecret(const std::string& darkestsecret)
 {
-	_phoneNumber = phoneNumber;
+    _darkestSecret=darkestsecret;
 }
 
-void Contact::setDarkestSecret(std::string darkestSecret)
-{
-	_darkestSecret = darkestSecret;
-}
 
 std::string Contact::getFirstName() const
 {
-	return _firstName;
+    return (_firstName);
 }
-
 std::string Contact::getLastName() const
 {
-	return _lastName;
+    return (_lastName);
 }
 
 std::string Contact::getNickName() const
 {
-    return _nickName;
+    return (_nickName);
 }
 
 std::string Contact::getPhoneNumber() const
 {
-    return _phoneNumber;
+    return (_phoneNumber);
 }
 
 std::string Contact::getDarkestSecret() const
 {
-    return _darkestSecret;
+    return (_darkestSecret);
 }
