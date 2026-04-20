@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 20:52:39 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/20 15:43:48 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/20 16:40:30 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 class HumanB
 {
     private:
-        std::string type;
-        Weapon *weapon;
+        std::string _name;
+        Weapon *_weapon;
     public:
-    HumanB(std::string name, Weapon *weapon);
+    HumanB(std::string name);
     ~HumanB();
+    void setWeapon(Weapon &weapon);
     void attack();
 };
 #endif

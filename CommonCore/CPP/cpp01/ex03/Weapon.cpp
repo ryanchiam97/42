@@ -6,11 +6,11 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:14:21 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/20 15:46:30 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/20 15:47:57 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Weapon.cpp"
+#include "Weapon.hpp"
 
 Weapon::Weapon(std::string type) : type(type)
 {
