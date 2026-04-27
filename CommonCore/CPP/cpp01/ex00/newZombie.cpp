@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 20:50:44 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/17 21:56:41 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:16:36 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 Zombie* newZombie(std::string name)
 {
 	Zombie* zombie = new Zombie(name);
-	return zombie;
+	return (zombie);
 }

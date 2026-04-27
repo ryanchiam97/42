@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 20:46:36 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/20 16:32:17 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:25:35 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int main()
         club.setType("some other type of club");
         jim.attack();
     }
-    return 0;
+    return (0);
 }
 

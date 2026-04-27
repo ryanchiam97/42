@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 20:46:39 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/21 00:05:32 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:32:14 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     if (!outfile.is_open())
     {
         std::cout << "Error: could not open output file" << std::endl;
-        return 1;
+        return (1);
     }
 
     outfile << result;

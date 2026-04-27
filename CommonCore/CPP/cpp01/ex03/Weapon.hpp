@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 20:52:00 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/20 15:29:09 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:24:29 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ class Weapon
         ~Weapon();
         const std::string &getType();
         void setType(std::string type);
-}
+};
 #endif

@@ -6,11 +6,12 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 20:46:27 by rchiam            #+#    #+#             */
-/*   Updated: 2026/04/25 18:29:44 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/04/27 22:23:02 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Zombie.hpp"
+#include <iostream>
 
 int main()
 {
