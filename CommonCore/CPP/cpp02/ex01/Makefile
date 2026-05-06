@@ -1,9 +1,9 @@
-NAME = fixed
+NAME = usefulFixed
 
 CPP = c++
 CPP_FLAGS = -Werror -Wextra -Wall -std=c++98
 
-SRC = 	main.cpp\
+SRC = main.cpp\
 		fixed.cpp
 
 OBJ = $(SRC:.cpp=.o)
