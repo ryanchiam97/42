@@ -4,7 +4,7 @@ CPP = c++
 CPP_FLAGS = -Werror -Wextra -Wall -std=c++98
 
 SRC = 	main.cpp\
-		fixed.cpp
+		Fixed.cpp
 
 OBJ = $(SRC:.cpp=.o)
 

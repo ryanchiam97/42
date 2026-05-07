@@ -1,4 +1,4 @@
-NAME = usefulFixed
+NAME = op_overload_Fixed
 
 CPP = c++
 CPP_FLAGS = -Werror -Wextra -Wall -std=c++98
