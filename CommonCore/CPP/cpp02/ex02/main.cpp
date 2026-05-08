@@ -6,7 +6,37 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 21:13:20 by rchiam            #+#    #+#             */
-/*   Updated: 2026/05/07 21:13:21 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/05/08 21:56:00 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Fixed.hpp"
+#include <iostream>
+
+int main( void ) {
+	Fixed a;
+	Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+	std::cout << a << std::endl;
+	std::cout << ++a << std::endl;
+	std::cout << a << std::endl;
+	std::cout << a++ << std::endl;
+	std::cout << a << std::endl;
+	std::cout << b << std::endl;
+	std::cout << Fixed::max( a, b ) << std::endl;
+	return 0;
+}
+// Should output something like (for greater readability, the constructor/destructor mes-
+// sages are removed in the example below):
+
+// $> ./a.out
+// 0
+// 0.00390625
+// 0.00390625
+// 0.00390625
+// 0.0078125
+// 10.1016
+// 10.1016
+// $>
+// If you ever do a division by 0, it is acceptable that the program
+// crashes
+// 14

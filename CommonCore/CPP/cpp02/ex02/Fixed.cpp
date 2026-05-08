@@ -6,7 +6,7 @@
 /*   By: rchiam <rchiam@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/07 21:21:29 by rchiam            #+#    #+#             */
-/*   Updated: 2026/05/07 23:34:59 by rchiam           ###   ########.fr       */
+/*   Updated: 2026/05/08 23:58:10 by rchiam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,37 @@ Fixed &Fixed::operator=(const Fixed& other)
 		this->_rawvalue = other.getRawBits();
 	std::cout << "Copy assignment operator called" << std::endl;
 	return (*this);
-};
+}
 Fixed::~Fixed()
 {
 	std::cout << "Destructor called" << std::endl;
-};
+}
 int	Fixed::getRawBits(void) const
 {
 	return this->_rawvalue;
-};
+}
 void Fixed::setRawBits(int const raw)
 {
 	this->_rawvalue = raw;
-};
+}
 Fixed::Fixed(const int val_int)
 {
 	this->_rawvalue = val_int << this->_fractional_bit_num;
 	std::cout << "Int constructor called" << std::endl;
-};
+}
 Fixed::Fixed(const float val_float)
 {
 	this->_rawvalue = roundf(val_float * (1 << this->_fractional_bit_num));
 	std::cout << "Float constructor called" << std::endl;
-};
+}
 float Fixed::toFloat(void) const
 {
 	return ((float)this->_rawvalue / (1 << this->_fractional_bit_num));
-};
+}
 int Fixed::toInt(void) const
 {
 	return (this->_rawvalue >> this->_fractional_bit_num);
-};
+}
 
 std::ostream& operator<<(std::ostream& out, const Fixed& fixed)
 {
